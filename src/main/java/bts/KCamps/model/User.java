@@ -4,7 +4,9 @@ import bts.KCamps.enums.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -35,47 +37,49 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "users")
+@Table(name = "usr")
+@ToString(exclude = {"child", "address", "userInfo", "boughtTrips"})
+@EqualsAndHashCode(exclude = {"child", "address", "userInfo", "boughtTrips"})
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @NotBlank(message = "Ім'я користувача не може бути пустим")
-    @Column(name = "username")
     private String username;
 
-    @NotBlank(message = "Будь ласка заповніть ПБІ")
-    @Column(name = "fullName")
     private String fullName;
 
-    @NotBlank(message = "Пароль не може бути пустим")
-    @Column(name = "password")
     @JsonIgnore
     private String password;
 
-    @Column(name = "phone", length = 14)
-    private String phoneNumber;
+    @Column(length = 14)
+    private String phone;
 
     @JsonIgnore
     private String activationCode;
+
     private boolean active;
 
-    @Email(message = "Введіть коректну елеткоронну адресу (потрібно для пітвердження користувача)")
-    @NotBlank(message = "Email не може бути пустим")
-    @Column(name = "email", unique = true)
+    @Column(unique = true)
     private String email;
 
-    @OneToMany(mappedBy = "parent", cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "parent",
+            cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.REFRESH},
+            fetch = FetchType.EAGER)
     @JsonIgnore
     private Set<Child> child = new HashSet<>();
 
-    @ManyToOne(optional = false, cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false,
+            cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.REFRESH},
+            fetch = FetchType.EAGER)
     @JoinColumn(name = "person_id")
     @JsonIgnore
     private UserAddress address;
 
-    @OneToOne(mappedBy = "user", optional = false, cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "user",
+            optional = false,
+            cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.REFRESH},
+            fetch = FetchType.EAGER)
     @JsonIgnore
     private UserInfo userInfo;
 
@@ -85,7 +89,8 @@ public class User implements UserDetails {
     @JsonIgnore
     private Set<Role> role = new HashSet<>();
 
-    @OneToMany(mappedBy="owner", cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.REFRESH},
+    @OneToMany(mappedBy="owner",
+            cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.REFRESH},
             fetch = FetchType.EAGER)
     private Set<BoughtTrip> boughtTrips = new HashSet<>();
 
@@ -93,7 +98,9 @@ public class User implements UserDetails {
         return role.contains(Role.ADMIN);
     }
 
-    //GETERS & SETERS
+    public boolean isModerator() {
+        return role.contains(Role.MODERATOR);
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -118,18 +125,5 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return isActive();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return id == user.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
     }
 }

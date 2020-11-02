@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -46,7 +47,7 @@ public class CampController {
     @GetMapping("/camp/profile/{camp}")
     public String getCampProfile(@PathVariable Camp camp, Model model) {
         model.addAttribute("camp", camp);
-        Set<CampChange> changes = new TreeSet<>(camp.getChanges());
+        Set<CampChange> changes = new HashSet<>(camp.getChanges());
         model.addAttribute("changes", changes);
 
         return "campProfile";
@@ -57,7 +58,7 @@ public class CampController {
             @AuthenticationPrincipal User user,
             @RequestParam Map<String, String> form) {
         String rate = form.get("rate");
-        String comment = form.get("comment");
+        String comment = form.get("message");
         long campId = Long.parseLong(form.get("campId"));
 
         campService.addComment(campId, user, comment, rate);

@@ -6,7 +6,9 @@ import bts.KCamps.enums.Location;
 import bts.KCamps.util.EnumUtil;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.CascadeType;
@@ -31,8 +33,10 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString(exclude = {"author","changes","comments"})
+@EqualsAndHashCode(exclude = {"author","changes","comments"})
 @Entity
-@Table(name = "camps")
+@Table
 public class Camp {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -41,12 +45,9 @@ public class Camp {
     @Column(name = "address")
     private String address;
 
-    @Length(max = 255, message = "Назва табору повинна бути не довша ніж 255 символів")
-    @NotBlank(message = "Будь ласка, вкажіть назву вашого табору")
     @Column(name = "nameCamp")
     private String nameCamp;
 
-    @Length(min = 150, max = 4096, message = "Некорректна довжина опису (150-4096)")
     @Column(name = "description", length = 4096)
     private String description;
 
@@ -63,10 +64,10 @@ public class Camp {
     private User author;
 
     @Column(name = "rating")
-    private double rating;
+    private float rating;
 
     @ElementCollection(targetClass = Interesting.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "camp_interest", joinColumns = @JoinColumn(name = "camp_id"))
+    @CollectionTable(name = "CAMP_INTEREST", joinColumns = @JoinColumn(name = "camp_id"))
     @Enumerated(EnumType.STRING)
     private Set<Interesting> interesting;
 
@@ -79,7 +80,7 @@ public class Camp {
     private Set<String> campPhotos = new HashSet<>();
 
     @ElementCollection(targetClass = Location.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "camp_location", joinColumns = @JoinColumn(name = "camp_id"))
+    @CollectionTable(name = "CAMP_LOCATION", joinColumns = @JoinColumn(name = "camp_id"))
     @Enumerated(EnumType.STRING)
     private Set<Location> locations;
 

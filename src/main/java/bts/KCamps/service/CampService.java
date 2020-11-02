@@ -1,6 +1,7 @@
 package bts.KCamps.service;
 
 import bts.KCamps.repository.CampRepo;
+import bts.KCamps.repository.CommentsRepo;
 import bts.KCamps.repository.UserRepo;
 import bts.KCamps.enums.Childhood;
 import bts.KCamps.enums.Interesting;
@@ -8,6 +9,7 @@ import bts.KCamps.enums.Location;
 import bts.KCamps.model.Camp;
 import bts.KCamps.model.Comment;
 import bts.KCamps.model.User;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,17 +27,14 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Service
+@RequiredArgsConstructor
 public class CampService {
     private final CampRepo campRepo;
     private final UserRepo userRepo;
+    private final CommentsRepo commentsRepo;
 
     @Value("${upload.path}")
     private String uploadPath;
-
-    public CampService(CampRepo campRepo, UserRepo userRepo) {
-        this.campRepo = campRepo;
-        this.userRepo = userRepo;
-    }
 
     public void deleteCamp(Camp camp) {
         campRepo.delete(camp);
@@ -67,9 +66,10 @@ public class CampService {
 
         if (optionalCamp.isPresent()) {
             Camp camp = optionalCamp.get();
-            camp.getComments().add(new Comment(Integer.valueOf(rate), comment, user.getUsername(), camp));
+            Comment com = new Comment(Integer.valueOf(rate), comment, user.getUsername(), camp);
             camp.setNewRating(Integer.valueOf(rate));
             campRepo.save(camp);
+            commentsRepo.save(com);
         }
     }
 

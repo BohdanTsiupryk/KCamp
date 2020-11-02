@@ -62,9 +62,9 @@ public class AdminController {
         ModeratorRequest mr = new ModeratorRequest();
         mr.setAuthor(currentUser);
         mr.setCampName(form.get("campName"));
-        mr.setFullname(form.get("fullName"));
+        mr.setFullName(form.get("fullName"));
         mr.setCampUrl(form.get("campUrl"));
-        mr.setComment(form.get("comment"));
+        mr.setMessage(form.get("message"));
 
         requestRepo.save(mr);
 

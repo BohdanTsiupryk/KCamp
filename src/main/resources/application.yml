@@ -1,5 +1,5 @@
 upload:
-  path: C:\\Users\\Tsiupryk\\Pictures\\src
+  path: C:\Users\bohdan.tsiupryk\Documents\logs
 
 server:
   port: 8080
@@ -9,7 +9,7 @@ spring:
   jpa:
     generate-ddl: false
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
   datasource:
     initialization-mode: always
     username: ${SPRING_DATASOURCE_USERNAME:dbuser}

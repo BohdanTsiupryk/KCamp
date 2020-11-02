@@ -2,7 +2,9 @@ package bts.KCamps.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.apache.tomcat.jni.Local;
 
 import javax.persistence.CascadeType;
@@ -23,8 +25,10 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString(exclude = {"parent","trips"})
+@EqualsAndHashCode(exclude = {"parent","trips"})
 @Entity
-@Table(name = "child")
+@Table
 public class Child {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

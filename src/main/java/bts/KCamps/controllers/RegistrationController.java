@@ -34,19 +34,19 @@ public class RegistrationController {
     @PostMapping("/registration")
     public String addUser(
             @RequestParam("password2") String password2,
-            @Valid User user,
+            User user,
             BindingResult bindingResult,
             Model model
     ) {
         boolean passConfrim = !user.getPassword().equals(password2);
-        boolean phoneConfrim = !user.getPhoneNumber().matches("\\+?(\\d\\d)?((\\d){10})");
-        boolean passPower = !user.getPassword().matches("(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\\s).*");
+        boolean phoneConfrim = !user.getPhone().matches("\\+?(\\d\\d)?((\\d){10})");
+        boolean passPower = false;//!user.getPassword().matches("(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\\s).*");
         if (passPower) {
             model.addAttribute("passPowerError", "Заслабкий пароль. Повинен містити: <br>- одну цифру,<br>- одну букву нижнього та верхнього регістрів" +
                     "<br>- мінімум одни спец символ<br>- мінімальна довжина 8 символів");
         }
         if (phoneConfrim) {
-            model.addAttribute("phoneNumberError", "Неправильний формат номеру (+380*********, 0*********)");
+            model.addAttribute("phoneError", "Неправильний формат номеру (+380*********, 0*********)");
         }
         if (passConfrim) {
             model.addAttribute("password2Error", "Паролі не збігаються");
@@ -65,8 +65,8 @@ public class RegistrationController {
                 model.addAttribute("message", "Успішно зареєстровано! Будь ласка, перегляньте свою пошту для активації акаунту!");
                 model.addAttribute("alert", "success");
 
-                mailService.send(user.getEmail(), "Activation Code",
-                        "Ласкаво просимо у Kid Camps! Ваша url для активації -  http://localhost:8080/activation/" + code);
+//                mailService.send(user.getEmail(), "Activation Code",
+//                        "Ласкаво просимо у Kid Camps! Ваша url для активації -  http://localhost:8080/activation/" + code);
             } else {
                 model.addAttribute("message", "User email EXIST");
                 return "registration";

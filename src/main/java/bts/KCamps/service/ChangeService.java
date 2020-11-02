@@ -36,7 +36,7 @@ public class ChangeService {
 
             CampChange campChange = new CampChange(number, description, places, places, begin, end, price, camp);
             camp.getChanges().add(campChange);
-            campRepo.save(camp);
+            changeRepo.save(campChange);
         }
     }
 

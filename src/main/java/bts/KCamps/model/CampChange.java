@@ -1,8 +1,12 @@
 package bts.KCamps.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+import org.springframework.util.comparator.Comparators;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,16 +24,19 @@ import java.util.Objects;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString(exclude = {"parentCamp"})
+@EqualsAndHashCode(exclude = {"parentCamp"})
 @Entity
-@Table(name = "change")
+@Table
 public class CampChange {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(name = "changeNumber")
     private int number;
 
-    @Column(length = 4096)
+    @Column(length = 2048)
     private String description;
 
     private int places;
@@ -55,5 +62,9 @@ public class CampChange {
         this.endDate = endDate;
         this.price = price;
         this.parentCamp = camp;
+    }
+
+    public int duration() {
+        return endDate.get(ChronoField.DAY_OF_YEAR) - beginDate.get(ChronoField.DAY_OF_YEAR);
     }
 }

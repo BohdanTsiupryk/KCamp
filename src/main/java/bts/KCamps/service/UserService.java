@@ -92,7 +92,7 @@ public class UserService implements UserDetailsService {
     public void updateUser(User user, Map<String, String> form) {
         user.setUsername(form.get("username"));
         user.setEmail(form.get("email"));
-        user.setPhoneNumber(form.get("phone"));
+        user.setPhone(form.get("phone"));
         String password = form.get("password");
         if (password != null && !password.isEmpty()) {
             user.setPassword(passwordEncoder.encode(password));

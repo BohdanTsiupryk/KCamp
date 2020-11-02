@@ -1,6 +1,8 @@
 package bts.KCamps.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -18,15 +20,19 @@ import java.util.Set;
 @Data
 @Entity
 @NoArgsConstructor
-@Table(name = "user_address")
+@AllArgsConstructor
+@Builder(builderMethodName = "of")
+@Table
 public class UserAddress {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     private String city;
+
     private String address;
 
-    @OneToMany(mappedBy="address", cascade = CascadeType.DETACH,fetch= FetchType.LAZY)
+    @OneToMany(mappedBy = "address", cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     @JsonIgnore
     private Set<User> inhabitants = new HashSet<>();
 

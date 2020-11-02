@@ -26,9 +26,11 @@ public class BoughtTrip {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
     @ManyToOne(optional = false, cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     @JoinColumn(name="change_id")
     private CampChange change;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name="child_trip",
             joinColumns=@JoinColumn(name="trip_id"),

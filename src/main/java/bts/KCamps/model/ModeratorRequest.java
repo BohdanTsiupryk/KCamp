@@ -22,14 +22,13 @@ public class ModeratorRequest {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    private String fullname;
+    private String fullName;
 
     private String campName;
 
     private String campUrl;
 
-    @Column(length = 4096)
-    private String comment;
+    private String message;
 
     @ManyToOne(optional = false, cascade = CascadeType.REFRESH)
     @JoinColumn(name = "person_id")
