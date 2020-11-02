@@ -29,7 +29,7 @@ public class UserInfo {
     private String citizenship;
 
     @OneToOne(optional=false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "userInfo")
     @JsonIgnore
     private User user;
 

@@ -7,7 +7,7 @@ import bts.KCamps.enums.Interesting;
 import bts.KCamps.enums.Location;
 import bts.KCamps.model.Camp;
 import bts.KCamps.model.User;
-import bts.KCamps.service.CampService;
+import bts.KCamps.service.impl.CampServiceImpl;
 import bts.KCamps.service.UserService;
 import bts.KCamps.util.ControllerUtil;
 import bts.KCamps.util.EnumUtil;
@@ -33,10 +33,10 @@ public class MainController {
 
     private final CampRepo campRepo;
     private final UserRepo userRepo;
-    private final CampService campService;
+    private final CampServiceImpl campService;
     private final UserService userService;
 
-    public MainController(CampRepo campRepo, UserRepo userRepo, CampService campService, UserService userService) {
+    public MainController(CampRepo campRepo, UserRepo userRepo, CampServiceImpl campService, UserService userService) {
         this.campRepo = campRepo;
         this.userRepo = userRepo;
         this.campService = campService;

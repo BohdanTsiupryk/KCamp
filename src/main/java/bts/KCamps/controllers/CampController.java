@@ -1,11 +1,12 @@
 package bts.KCamps.controllers;
 
-import bts.KCamps.repository.CampRepo;
-import bts.KCamps.repository.UserRepo;
 import bts.KCamps.model.Camp;
 import bts.KCamps.model.CampChange;
 import bts.KCamps.model.User;
+import bts.KCamps.repository.CampRepo;
+import bts.KCamps.repository.UserRepo;
 import bts.KCamps.service.CampService;
+import bts.KCamps.service.impl.CampServiceImpl;
 import bts.KCamps.util.ControllerUtil;
 import bts.KCamps.util.EnumUtil;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,27 +28,26 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.TreeSet;
 
 @Controller
 public class CampController {
-    private final CampRepo campRepo;
-    private final UserRepo userRepo;
     private final CampService campService;
+    private final UserRepo userRepo;
 
     @Value("${upload.path}")
     private String uploadPath;
 
-    public CampController(CampRepo campRepo, UserRepo userRepo, CampService campService) {
-        this.campRepo = campRepo;
-        this.userRepo = userRepo;
+    public CampController(CampService campService, UserRepo userRepo) {
         this.campService = campService;
+        this.userRepo = userRepo;
     }
 
-    @GetMapping("/camp/profile/{camp}")
-    public String getCampProfile(@PathVariable Camp camp, Model model) {
-        model.addAttribute("camp", camp);
+    @GetMapping("/camp/profile/{campId}")
+    public String getCampProfile(@PathVariable Long campId, Model model) {
+        Camp camp = campService.getById(campId);
         Set<CampChange> changes = new HashSet<>(camp.getChanges());
+
+        model.addAttribute("camp", camp);
         model.addAttribute("changes", changes);
 
         return "campProfile";
@@ -67,12 +67,12 @@ public class CampController {
     }
 
     @PreAuthorize("hasAuthority('MODERATOR')")
-    @GetMapping("/camp/{camp}")
+    @GetMapping("/camp/{campId}")
     public String editCampForm(
             @AuthenticationPrincipal User user,
-            @PathVariable Camp camp,
-            Model model
-    ) {
+            @PathVariable Long campId,
+            Model model) {
+        Camp camp = campService.getById(campId);
         if (camp.getAuthor().getId() != user.getId()) {
             return "redirect:/profile";
         }
@@ -83,8 +83,10 @@ public class CampController {
     }
 
     @PreAuthorize("hasAuthority('MODERATOR')")
-    @GetMapping("/camp/delete/{camp}")
-    public String deleteCamp(@AuthenticationPrincipal User user, @PathVariable Camp camp) {
+    @GetMapping("/camp/delete/{campId}")
+    public String deleteCamp(@AuthenticationPrincipal User user, @PathVariable Long campId) {
+        Camp camp = campService.getById(campId);
+
         if (camp.getAuthor().getId() != user.getId()) {
             return "redirect:/profile";
         }
@@ -117,11 +119,11 @@ public class CampController {
             @RequestParam("locationsf") String[] locations,
             @RequestParam("childhoodsf") String[] childhoods,
             @AuthenticationPrincipal User user,
-            @Valid Camp camp,
+            Camp camp,
             BindingResult bindingResult,
             Model model,
-            @RequestParam(value = "image", required = false) MultipartFile image
-    ) throws IOException {
+            @RequestParam(value = "image", required = false) MultipartFile image) throws IOException {
+
         if (bindingResult.hasErrors()) {
             Map<String, String> errorMap = ControllerUtil.getErrorMap(bindingResult);
             model.mergeAttributes(errorMap);
@@ -135,7 +137,7 @@ public class CampController {
             model.addAttribute("message", "Табір успішно доданий");
         }
 
-        List<Camp> userCamps = campRepo.findAllByAuthor(user);
+        List<Camp> userCamps = campService.getAllByAuthor(user);
         Optional<User> userFromDb = userRepo.findById(user.getId());
 
         userFromDb.ifPresent(value -> model.addAttribute("userFormDb", value));

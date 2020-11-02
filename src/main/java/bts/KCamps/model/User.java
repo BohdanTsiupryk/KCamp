@@ -63,23 +63,16 @@ public class User implements UserDetails {
     @Column(unique = true)
     private String email;
 
-    @OneToMany(mappedBy = "parent",
-            cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.REFRESH},
-            fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     @JsonIgnore
     private Set<Child> child = new HashSet<>();
 
-    @ManyToOne(optional = false,
-            cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.REFRESH},
-            fetch = FetchType.EAGER)
-    @JoinColumn(name = "person_id")
+    @ManyToOne(optional = false, cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "inhabitants")
     @JsonIgnore
     private UserAddress address;
 
-    @OneToOne(mappedBy = "user",
-            optional = false,
-            cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.REFRESH},
-            fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "user", optional = false, cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     @JsonIgnore
     private UserInfo userInfo;
 

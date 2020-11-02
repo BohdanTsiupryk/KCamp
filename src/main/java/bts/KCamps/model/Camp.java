@@ -48,44 +48,42 @@ public class Camp {
     @Column(name = "nameCamp")
     private String nameCamp;
 
-    @Column(name = "description", length = 4096)
+    @Column(name = "description", length = 2048)
     private String description;
 
     @Column(name = "mainPicName")
     private String mainPicName;
 
-    @ElementCollection(targetClass = Childhood.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "childhood", joinColumns = @JoinColumn(name = "camp_id"))
-    @Enumerated(EnumType.STRING)
-    private Set<Childhood> childhoods;
-
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User author;
 
     @Column(name = "rating")
     private float rating;
 
-    @ElementCollection(targetClass = Interesting.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "CAMP_INTEREST", joinColumns = @JoinColumn(name = "camp_id"))
-    @Enumerated(EnumType.STRING)
-    private Set<Interesting> interesting;
-
-    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinColumn(name = "change_id")
+    @OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Set<CampChange> changes = new HashSet<>();
 
     @ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "camp_photo", joinColumns = @JoinColumn(name = "camp_id"))
     private Set<String> campPhotos = new HashSet<>();
 
+    @ElementCollection(targetClass = Interesting.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "CAMP_INTEREST", joinColumns = @JoinColumn(name = "camp_id"))
+    @Enumerated(EnumType.STRING)
+    private Set<Interesting> interesting;
+
+    @ElementCollection(targetClass = Childhood.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "childhood", joinColumns = @JoinColumn(name = "camp_id"))
+    @Enumerated(EnumType.STRING)
+    private Set<Childhood> childhoods;
+
     @ElementCollection(targetClass = Location.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "CAMP_LOCATION", joinColumns = @JoinColumn(name = "camp_id"))
     @Enumerated(EnumType.STRING)
     private Set<Location> locations;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinColumn(name = "camp")
+    @OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Set<Comment> comments = new HashSet<>();
 
     public Camp(String nameCamp, String description, String[] interests, String[] locations, String[] childhoods) {

@@ -45,7 +45,7 @@ public class Child {
     private String specialWishes;
 
     @ManyToOne(optional = false, cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "parent_id")
+    @JoinColumn(name = "child")
     private User parent;
 
     @ManyToMany(fetch = FetchType.EAGER)

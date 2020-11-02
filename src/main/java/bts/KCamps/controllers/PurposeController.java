@@ -4,9 +4,12 @@ import bts.KCamps.model.Camp;
 import bts.KCamps.model.CampChange;
 import bts.KCamps.model.Child;
 import bts.KCamps.model.User;
+import bts.KCamps.service.CampService;
+import bts.KCamps.service.ChangeService;
 import bts.KCamps.service.MailService;
 import bts.KCamps.service.UserService;
 import bts.KCamps.util.RandomGenerator;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,29 +24,25 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Controller
+@RequiredArgsConstructor
 public class PurposeController {
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     private final MailService mailService;
     private final UserService userService;
-
-    public PurposeController(MailService mailService, UserService userService) {
-        this.mailService = mailService;
-        this.userService = userService;
-    }
+    private final CampService campService;
+    private final ChangeService changeService;
 
     @GetMapping("/buy/{camp}/{change}")
     public String getBuyPage(
             @AuthenticationPrincipal User user,
             @PathVariable("change") CampChange change,
             @PathVariable("camp") Camp camp,
-            Model model
-    ) {
+            Model model) {
         if (!user.getActivationCode().equals("")) {
             model.addAttribute("message", "Для здійснення покупок, потрібно підтвердити електронну пошту!");
             return "messagePage";
         }
-
 
         model.addAttribute("camp", camp);
         model.addAttribute("change", change);
@@ -54,30 +53,22 @@ public class PurposeController {
     @PostMapping("/purpose")
     public String buyRequest(
             @AuthenticationPrincipal User user,
-            @RequestParam("campId") Camp camp,
-            @RequestParam("changeId") CampChange change,
+            @RequestParam Long campId,
+            @RequestParam Long changeId,
             @RequestParam Map<String, String> form,
-            Model model
-    ) throws Exception {
-        Map<String, String> data = new HashMap<>();
-        data.put("camp name", camp.getNameCamp());
-        data.put("user name", user.getUsername());
-        data.put("begin date", change.getBeginDate().toString());
-        data.put("end date", change.getEndDate().toString());
+            Model model) {
+        Camp camp = campService.getById(campId);
+        CampChange change = changeService.getById(changeId);
 
-        for (String line : form.keySet()) {
-            if (line.startsWith("kid")) {
-                data.put(line, form.get(line));
-            }
-        }
+        Map<String, String> data = buildDataMap(form, camp, user, change);
 
         Child child = new Child(
-                data.get("kidFullName"),
-                data.get("kidDocument"),
-                LocalDate.parse(data.get("kidBirthday"), formatter),
-                data.get("kidCitizenship"),
+                form.get("kidFullName"),
+                form.get("kidDocument"),
+                LocalDate.parse(form.get("kidBirthday"), formatter),
+                form.get("kidCitizenship"),
                 user,
-                data.get("kidSpecialWishes"));
+                form.get("kidSpecialWishes"));
         user.getChild().add(child);
 
         String orderId = RandomGenerator.randomOrderId();
@@ -89,4 +80,18 @@ public class PurposeController {
                 " та ви зможете переглянути його у профілі");
         return "messagePage";
     }
+
+    private Map<String, String> buildDataMap(Map<String, String> form, Camp camp, User user, CampChange change) {
+        Map<String, String> data = new HashMap<>();
+        data.put("camp name", camp.getNameCamp());
+        data.put("user name", user.getUsername());
+        data.put("begin date", change.getBeginDate().toString());
+        data.put("end date", change.getEndDate().toString());
+
+        form.keySet().stream()
+                .filter(s -> s.startsWith("kid"))
+                .forEach(s -> data.put(s, form.get(s)));
+        return data;
+    }
+
 }

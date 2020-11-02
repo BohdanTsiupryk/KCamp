@@ -3,7 +3,7 @@ package bts.KCamps.controllers.rest;
 import bts.KCamps.repository.CampRepo;
 import bts.KCamps.repository.UserRepo;
 import bts.KCamps.model.Camp;
-import bts.KCamps.service.CampService;
+import bts.KCamps.service.impl.CampServiceImpl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -26,12 +26,12 @@ public class CampRestController {
 
     private final CampRepo campRepo;
     private final UserRepo userRepo;
-    private final CampService campService;
+    private final CampServiceImpl campService;
 
     @Value("${upload.path}")
     private String uploadPath;
 
-    public CampRestController(CampRepo campRepo, UserRepo userRepo, CampService campService) {
+    public CampRestController(CampRepo campRepo, UserRepo userRepo, CampServiceImpl campService) {
         this.campRepo = campRepo;
         this.userRepo = userRepo;
         this.campService = campService;

@@ -1,6 +1,6 @@
 package bts.KCamps.controllers;
 
-import bts.KCamps.service.ChangeService;
+import bts.KCamps.service.impl.ChangeServiceImpl;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,9 +14,9 @@ import java.util.Map;
 public class ChangeController {
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
-    private final ChangeService changeService;
+    private final ChangeServiceImpl changeService;
 
-    public ChangeController(ChangeService changeService) {
+    public ChangeController(ChangeServiceImpl changeService) {
         this.changeService = changeService;
     }
 

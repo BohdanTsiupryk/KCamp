@@ -16,9 +16,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.time.LocalDate;
 import java.time.temporal.ChronoField;
+import java.util.List;
 import java.util.Objects;
 
 @Data
@@ -49,7 +51,7 @@ public class CampChange {
 
     private int price;
 
-    @ManyToOne(optional = false, cascade = {CascadeType.REFRESH})
+    @ManyToOne(optional = false, cascade = {CascadeType.REMOVE})
     @JoinColumn(name = "changes")
     private Camp parentCamp;
 

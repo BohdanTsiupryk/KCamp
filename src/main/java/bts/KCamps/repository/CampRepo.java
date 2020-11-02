@@ -5,7 +5,12 @@ import bts.KCamps.model.User;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CampRepo extends CrudRepository<Camp, Long> {
     List<Camp> findAllByAuthor(User user);
+
+    Optional<Camp> findById(Long id);
+
+    List<Camp> findAll();
 }

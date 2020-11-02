@@ -10,6 +10,7 @@ import bts.KCamps.model.UserInfo;
 import bts.KCamps.repository.ChildRepo;
 import bts.KCamps.repository.TripRepo;
 import bts.KCamps.repository.UserRepo;
+import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,21 +29,15 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class UserService implements UserDetailsService {
     private static final Logger logger = LogManager.getLogger(UserService.class);
     private final UserRepo userRepo;
     private final PasswordEncoder passwordEncoder;
     private final TripRepo tripRepo;
     private final ChildRepo childRepo;
+
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
-
-    public UserService(UserRepo userRepo, PasswordEncoder passwordEncoder, TripRepo tripRepo, ChildRepo childRepo) {
-        this.userRepo = userRepo;
-        this.passwordEncoder = passwordEncoder;
-        this.tripRepo = tripRepo;
-        this.childRepo = childRepo;
-    }
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {

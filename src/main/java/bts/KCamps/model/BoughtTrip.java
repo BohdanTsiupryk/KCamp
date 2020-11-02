@@ -27,20 +27,19 @@ public class BoughtTrip {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @ManyToOne(optional = false, cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-    @JoinColumn(name="change_id")
+    @ManyToOne(optional = false, cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @JoinColumn(name = "parentCamp")
     private CampChange change;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name="child_trip",
-            joinColumns=@JoinColumn(name="trip_id"),
-            inverseJoinColumns=@JoinColumn(name="child_id"))
+    @JoinTable(name = "child_trip",
+            joinColumns = @JoinColumn(name = "trip_id"),
+            inverseJoinColumns = @JoinColumn(name = "child_id"))
     private Set<Child> child = new HashSet<>();
-    
-    @Column(length = 255)
+
     private String orderId;
 
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "boughtTrips")
     private User owner;
 
