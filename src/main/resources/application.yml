@@ -1,5 +1,5 @@
 upload:
-  path: C:\Users\bohdan.tsiupryk\Documents\logs
+  path: ${java.io.tmpdir}/photos/
 
 server:
   port: 8080

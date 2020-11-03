@@ -175,8 +175,8 @@
                     <h4> День народження : <span class="badge badge-secondary">${userFormDb.getBirthday()?if_exists}</span></h4>
                     <h4> Національність : <span class="badge badge-secondary">${userFormDb.getCitizenship()?if_exists}</span></h4>
                     <h4> Серія та номер паспорта : <span class="badge badge-secondary">${userFormDb.getPassportNumber()?if_exists}</span></h4>
-                    <h4> Місто проживання : <span class="badge badge-secondary">${userFormDb.city?if_exists}</span></h4>
-                    <h4> Адресса : <span class="badge badge-secondary">${userFormDb.address?if_exists}</span></h4>
+                    <h4> Місто проживання : <span class="badge badge-secondary">${userFormDb.getCity()?if_exists}</span></h4>
+                    <h4> Адресса : <span class="badge badge-secondary">${userFormDb.getAddress()?if_exists}</span></h4>
                 </div>
             </div>
         </div>
