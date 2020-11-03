@@ -10,7 +10,6 @@ spring:
     generate-ddl: false
     hibernate:
       ddl-auto: update
-    database-platform: ${db-dialect:org.hibernate.dialect.Oracle10gDialect}
   datasource:
     initialization-mode: always
     username: ${SPRING_DATASOURCE_USERNAME:dbuser}
