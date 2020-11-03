@@ -1,12 +1,11 @@
 package bts.KCamps.service;
 
 import bts.KCamps.enums.Role;
+import bts.KCamps.exception.NotFoundException;
 import bts.KCamps.model.BoughtTrip;
 import bts.KCamps.model.CampChange;
 import bts.KCamps.model.Child;
 import bts.KCamps.model.User;
-import bts.KCamps.model.UserAddress;
-import bts.KCamps.model.UserInfo;
 import bts.KCamps.repository.ChildRepo;
 import bts.KCamps.repository.TripRepo;
 import bts.KCamps.repository.UserRepo;
@@ -18,9 +17,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collections;
@@ -39,11 +38,17 @@ public class UserService implements UserDetailsService {
 
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
+    public User findById(Long id) {
+        return userRepo.findById(id)
+                .orElseThrow(() -> new NotFoundException(id.toString(), User.class));
+    }
+
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         return userRepo.findByUsername(s);
     }
 
+    @Transactional
     public void addOrder(CampChange change, Child child, User user, String orderId) {
         change.setFreePlace(change.getFreePlace() - 1);
         BoughtTrip trip = new BoughtTrip(change, child, user);
@@ -53,6 +58,7 @@ public class UserService implements UserDetailsService {
         userRepo.save(user);
     }
 
+    @Transactional
     public boolean checkCode(String code) {
         User user = userRepo.findByActivationCode(code);
         if (user != null) {
@@ -64,6 +70,7 @@ public class UserService implements UserDetailsService {
         return false;
     }
 
+    @Transactional
     public boolean addUser(User user) {
         User userFromDb = userRepo.findByUsername(user.getUsername());
         if (userFromDb != null) {
@@ -73,17 +80,18 @@ public class UserService implements UserDetailsService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setActive(true);
         user.setRole(Collections.singleton(Role.USER));
-        user.setAddress(new UserAddress());
-        user.setUserInfo(new UserInfo(LocalDate.of(2000, Month.JANUARY, 1),
-                "null", "ukranian", user));
+//        user.setAddress(new UserAddress());
+//        user.setUserInfo(new UserInfo(LocalDate.of(2000, Month.JANUARY, 1), "null", "ukranian", user));
         userRepo.save(user);
         return true;
     }
 
+    @Transactional
     public void deleteUser(User user) {
         userRepo.delete(user);
     }
 
+    @Transactional
     public void updateUser(User user, Map<String, String> form) {
         user.setUsername(form.get("username"));
         user.setEmail(form.get("email"));
@@ -93,12 +101,12 @@ public class UserService implements UserDetailsService {
             user.setPassword(passwordEncoder.encode(password));
         }
 
-        user.getUserInfo().setBirthday(LocalDate.parse(form.get("birthday"), formatter));
-        user.getUserInfo().setCitizenship(form.get("citizenship"));
-        user.getUserInfo().setPassportNumber(form.get("passportNumber"));
+        user.setBirthday(LocalDate.parse(form.get("birthday"), formatter));
+        user.setCitizenship(form.get("citizenship"));
+        user.setPassportNumber(form.get("passportNumber"));
 
-        user.getAddress().setCity(form.get("city"));
-        user.getAddress().setAddress(form.get("address"));
+        user.setCity(form.get("city"));
+        user.setAddress(form.get("address"));
 
         Set<String> roles = Arrays.stream(Role.values())
                 .map(Role::name)
@@ -116,6 +124,6 @@ public class UserService implements UserDetailsService {
             user.getRole().add(Role.USER);
         }
 
-        userRepo.save(user);
+        userRepo.saveAndFlush(user);
     }
 }

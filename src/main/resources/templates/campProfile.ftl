@@ -8,7 +8,7 @@
                 <img src="/img/${camp.mainPicName}" alt="${camp.mainPicName}">
                 <br>
                 <#list camp.locations as location>
-                    <a href="/filter/loc/${location.getName()}" class="badge badge-light">${location.getName()}</a>
+                    <a href="/filter/loc/${location}" class="badge badge-light">${location.getDescription()}</a>
                 </#list>
                 <br>
                 <#list camp.childhoods as hood>
@@ -16,7 +16,7 @@
                 </#list>
                 <br>
                 <#list camp.interesting as interest>
-                    <a href="/filter/inter/${interest.getName()}" class="badge badge-info">${interest.getName()}</a>
+                    <a href="/filter/inter/${interest}" class="badge badge-info">${interest.getDescription()}</a>
                 </#list>
                 <br>
             </div>

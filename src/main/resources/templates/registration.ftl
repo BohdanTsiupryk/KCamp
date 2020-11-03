@@ -19,7 +19,7 @@
             </div>
         </div>
         <div class="form-group row">
-            <label class="col-sm-2 col-form-label"> Логін : </label>
+            <label class="col-sm-2 col-form-label"> П.Б.І. : </label>
             <div class="col-sm-6">
                 <input type="text" class="form-control ${(fullNameError??)?string('is-invalid','')}"
                        <#if user??>value="${user.fullName?if_exists}"</#if> name="fullName" placeholder="ПБІ користувача" />

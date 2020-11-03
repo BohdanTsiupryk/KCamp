@@ -31,7 +31,7 @@ public class BoughtTrip {
     @JoinColumn(name = "parentCamp")
     private CampChange change;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "child_trip",
             joinColumns = @JoinColumn(name = "trip_id"),
             inverseJoinColumns = @JoinColumn(name = "child_id"))

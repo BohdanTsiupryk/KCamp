@@ -15,22 +15,31 @@ public enum Interesting{
     ART("Мистецтво"),
     HoUSE_RIDE("Верхова їзда");
 
-    private String name;
+    private String description;
 
-    Interesting(String name) {
-        this.name = name;
+    Interesting(String description) {
+        this.description = description;
     }
 
-    public static Interesting getByName(String name) {
+    public static Interesting getByDescription(String name) {
         for (Interesting inter : Interesting.values()) {
-            if (inter.name.equals(name)) {
+            if (inter.description.equals(name)) {
                 return inter;
             }
         }
         return null;
     }
 
-    public String getName() {
-        return name;
+    public static Interesting getByName(String name) {
+        for (Interesting inter : Interesting.values()) {
+            if (inter.name().equals(name)) {
+                return inter;
+            }
+        }
+        return null;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }

@@ -5,7 +5,6 @@ import bts.KCamps.model.Camp;
 import bts.KCamps.model.CampChange;
 import bts.KCamps.model.Child;
 import bts.KCamps.model.User;
-import bts.KCamps.model.UserAddress;
 import bts.KCamps.model.report.CampReport;
 import bts.KCamps.model.report.ChangeReport;
 import bts.KCamps.repository.TripRepo;
@@ -81,8 +80,7 @@ public class ReportService {
         Map<String, Long> userCity = new LinkedHashMap<>(
                 boughtTrips.stream()
                 .map(BoughtTrip::getOwner)
-                .map(User::getAddress)
-                .map(UserAddress::getCity)
+                .map(User::getCity)
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting())));
 
         long sum = cityCounter(userCity);

@@ -2,13 +2,16 @@ package bts.KCamps.controllers;
 
 import bts.KCamps.model.Camp;
 import bts.KCamps.model.CampChange;
+import bts.KCamps.model.Comment;
 import bts.KCamps.model.User;
 import bts.KCamps.repository.CampRepo;
+import bts.KCamps.repository.CommentsRepo;
 import bts.KCamps.repository.UserRepo;
 import bts.KCamps.service.CampService;
 import bts.KCamps.service.impl.CampServiceImpl;
 import bts.KCamps.util.ControllerUtil;
 import bts.KCamps.util.EnumUtil;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -30,23 +33,21 @@ import java.util.Optional;
 import java.util.Set;
 
 @Controller
+@RequiredArgsConstructor
 public class CampController {
     private final CampService campService;
     private final UserRepo userRepo;
+    private final CommentsRepo commentsRepo;
 
     @Value("${upload.path}")
     private String uploadPath;
-
-    public CampController(CampService campService, UserRepo userRepo) {
-        this.campService = campService;
-        this.userRepo = userRepo;
-    }
 
     @GetMapping("/camp/profile/{campId}")
     public String getCampProfile(@PathVariable Long campId, Model model) {
         Camp camp = campService.getById(campId);
         Set<CampChange> changes = new HashSet<>(camp.getChanges());
-
+        Set<Comment> allByCamp = commentsRepo.findAllByCampId(campId);
+        camp.setComments(allByCamp);
         model.addAttribute("camp", camp);
         model.addAttribute("changes", changes);
 

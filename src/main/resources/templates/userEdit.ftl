@@ -15,7 +15,7 @@
             <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1">Адресса</span>
             </div>
-            <input type="text" class="form-control" name="address" value="${user.address.address?if_exists}" />
+            <input type="text" class="form-control" name="address" value="${user.address?if_exists}" />
         </div>
         <div class="container">
             <div class="row">
@@ -58,25 +58,25 @@
                 <div class="col-sm">
                     <div class="form-group">
                         <label>День народження</label><br>
-                        <input type="date" class="form-control" name="birthday" value="${user.userInfo.birthday?if_exists}" />
+                        <input type="date" class="form-control" name="birthday" value="${user.birthday?if_exists}" />
                     </div>
                 </div>
                 <div class="col-sm">
                     <div class="form-group">
                         <label>Паспортні дані</label><br>
-                        <input type="text" class="form-control" name="passportNumber" value="${user.userInfo.passportNumber?if_exists}" />
+                        <input type="text" class="form-control" name="passportNumber" value="${user.passportNumber?if_exists}" />
                     </div>
                 </div>
                 <div class="col-sm">
                     <div class="form-group">
                         <label>Громадянство</label><br>
-                        <input type="text" class="form-control" name="citizenship" value="${user.userInfo.citizenship?if_exists}" />
+                        <input type="text" class="form-control" name="citizenship" value="${user.citizenship?if_exists}" />
                     </div>
                 </div>
                 <div class="col-sm">
                     <div class="form-group">
                         <label>Місто проживання</label><br>
-                        <input type="text" class="form-control" name="city" value="${user.address.city?if_exists}" />
+                        <input type="text" class="form-control" name="city" value="${user.city?if_exists}" />
                     </div>
                 </div>
                 <div class="col-sm">

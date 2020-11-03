@@ -14,7 +14,7 @@
                     <label>Табірні особливості (Можна обрати декілька)</label>
                     <select multiple="multiple" class="form-control" name="interests">
                         <#list interests as inter>
-                            <option value="${inter.getName()}">${inter.getName()}</option>
+                            <option value="${inter}">${inter.getDescription()}</option>
                         </#list>
                     </select>
                 </div>
@@ -22,7 +22,7 @@
                     <label>Розташування (Можна обрати декілька)</label>
                     <select multiple="multiple" class="form-control" name="locations">
                         <#list locations as location>
-                            <option value="${location.getName()}">${location.getName()}</option>
+                            <option value="${location}">${location.getDescription()}</option>
                         </#list>
                     </select>
                 </div>

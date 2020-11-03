@@ -67,9 +67,8 @@ public class PurposeController {
                 form.get("kidDocument"),
                 LocalDate.parse(form.get("kidBirthday"), formatter),
                 form.get("kidCitizenship"),
-                user,
+                user.getId(),
                 form.get("kidSpecialWishes"));
-        user.getChild().add(child);
 
         String orderId = RandomGenerator.randomOrderId();
 

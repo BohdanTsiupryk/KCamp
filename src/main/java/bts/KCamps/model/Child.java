@@ -25,8 +25,8 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = {"parent","trips"})
-@EqualsAndHashCode(exclude = {"parent","trips"})
+@ToString(exclude = {"trips"})
+@EqualsAndHashCode(exclude = {"trips"})
 @Entity
 @Table
 public class Child {
@@ -44,9 +44,7 @@ public class Child {
 
     private String specialWishes;
 
-    @ManyToOne(optional = false, cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "child")
-    private User parent;
+    private Long parentId;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "child_trip",
@@ -54,12 +52,12 @@ public class Child {
             inverseJoinColumns = @JoinColumn(name = "trip_id"))
     private Set<BoughtTrip> trips;
 
-    public Child(String fullName, String document, LocalDate birthday, String citizenship, User parent, String specialWishes) {
+    public Child(String fullName, String document, LocalDate birthday, String citizenship, Long parent, String specialWishes) {
         this.fullName = fullName;
         this.document = document;
         this.birthday = birthday;
         this.citizenship = citizenship;
-        this.parent = parent;
+        this.parentId = parent;
         this.specialWishes = specialWishes;
     }
 

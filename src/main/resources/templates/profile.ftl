@@ -52,7 +52,7 @@
                         <label>Табірні особливості (Можна обрати декілька)</label>
                         <select  multiple="multiple" class="form-control" name="interestsf" required="required">
                             <#list interests as inter>
-                                <option value="${inter.getName()}">${inter.getName()}</option>
+                                <option value="${inter}">${inter.getDescription()}</option>
                             </#list>
                         </select>
                     </div>
@@ -60,7 +60,7 @@
                         <label>Локація табору</label>
                         <select  multiple="multiple" class="form-control" name="locationsf" required="required">
                             <#list locations as local>
-                                <option value="${local.getName()}">${local.getName()}</option>
+                                <option value="${local}">${local.getDescription()}</option>
                             </#list>
                         </select>
                     </div>
@@ -172,11 +172,11 @@
                 </h4>
 
                 <div class="collapse" id="detail">
-                    <h4> День народження : <span class="badge badge-secondary">${userFormDb.userInfo.getBirthday()?if_exists}</span></h4>
-                    <h4> Національність : <span class="badge badge-secondary">${userFormDb.userInfo.getCitizenship()?if_exists}</span></h4>
-                    <h4> Серія та номер паспорта : <span class="badge badge-secondary">${userFormDb.userInfo.getPassportNumber()?if_exists}</span></h4>
-                    <h4> Місто проживання : <span class="badge badge-secondary">${userFormDb.address.city?if_exists}</span></h4>
-                    <h4> Адресса : <span class="badge badge-secondary">${userFormDb.address.address?if_exists}</span></h4>
+                    <h4> День народження : <span class="badge badge-secondary">${userFormDb.getBirthday()?if_exists}</span></h4>
+                    <h4> Національність : <span class="badge badge-secondary">${userFormDb.getCitizenship()?if_exists}</span></h4>
+                    <h4> Серія та номер паспорта : <span class="badge badge-secondary">${userFormDb.getPassportNumber()?if_exists}</span></h4>
+                    <h4> Місто проживання : <span class="badge badge-secondary">${userFormDb.city?if_exists}</span></h4>
+                    <h4> Адресса : <span class="badge badge-secondary">${userFormDb.address?if_exists}</span></h4>
                 </div>
             </div>
         </div>

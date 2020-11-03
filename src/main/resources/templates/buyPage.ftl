@@ -15,12 +15,12 @@
         <div class="form-row">
             <div class="form-group col-md-3">
                 <label>Дата народження</label>
-                <input  type="date" class="form-control" name="birthday" value="${user.userInfo.birthday?if_exists}" />
+                <input  type="date" class="form-control" name="birthday" value="${user.birthday?if_exists}" />
 
             </div>
             <div class="form-group col-md-3">
                 <label>Серія та номер паспорта</label>
-                <input  type="text" class="form-control" name="passportNumber" value="${user.userInfo.passportNumber?if_exists}" />
+                <input  type="text" class="form-control" name="passportNumber" value="${user.passportNumber?if_exists}" />
             </div>
             <div class="form-group col-md-3">
                 <label>Телефон</label>
@@ -28,19 +28,19 @@
             </div>
             <div class="form-group col-md-3">
                 <label>Громадянство</label>
-                <input  type="text" class="form-control" name="citizenship" value="${user.userInfo.citizenship?if_exists} /">
+                <input  type="text" class="form-control" name="citizenship" value="${user.citizenship?if_exists} /">
             </div>
         </div>
         <div class="form-group row">
             <label for="inputEmail3" class="col-sm-2 col-form-label">Місто проживання</label>
             <div class="col-sm-10">
-                <input  type="text" class="form-control" name="city" value="${user.address.city?if_exists}" />
+                <input  type="text" class="form-control" name="city" value="${user.city?if_exists}" />
             </div>
         </div>
         <div class="form-group row">
             <label for="inputEmail3" class="col-sm-2 col-form-label">Адреса проживання</label>
             <div class="col-sm-10">
-                <input  type="text" class="form-control" name="address" value="${user.address.address?if_exists}" />
+                <input  type="text" class="form-control" name="address" value="${user?if_exists}" />
             </div>
         </div>
         <br>

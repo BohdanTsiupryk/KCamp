@@ -28,6 +28,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
@@ -38,8 +39,6 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Table(name = "usr")
-@ToString(exclude = {"child", "address", "userInfo", "boughtTrips"})
-@EqualsAndHashCode(exclude = {"child", "address", "userInfo", "boughtTrips"})
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -63,18 +62,15 @@ public class User implements UserDetails {
     @Column(unique = true)
     private String email;
 
-    @OneToMany(mappedBy = "parent", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-    @JsonIgnore
-    private Set<Child> child = new HashSet<>();
+    private String city;
 
-    @ManyToOne(optional = false, cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "inhabitants")
-    @JsonIgnore
-    private UserAddress address;
+    private String address;
 
-    @OneToOne(mappedBy = "user", optional = false, cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
-    @JsonIgnore
-    private UserInfo userInfo;
+    private LocalDate birthday;
+
+    private String passportNumber;
+
+    private String citizenship;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))

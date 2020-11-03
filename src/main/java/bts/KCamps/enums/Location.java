@@ -6,20 +6,29 @@ public enum Location {
     LAKE("Озера"),
     NATIONAL_PARKS("Національний парк");
 
-    private String name;
+    private String description;
 
-    Location(String name) {
-        this.name = name;
+    Location(String description) {
+        this.description = description;
     }
 
-    public String getName() {
-        return name;
+    public String getDescription() {
+        return description;
+    }
+
+    public static Location getByDescription(String name) {
+        for (Location inter : Location.values()) {
+            if (inter.description.equals(name)) {
+                return inter;
+            }
+        }
+        return null;
     }
 
     public static Location getByName(String name) {
-        for (Location local : Location.values()) {
-            if (local.name.equals(name)) {
-                return local;
+        for (Location inter : Location.values()) {
+            if (inter.name().equals(name)) {
+                return inter;
             }
         }
         return null;

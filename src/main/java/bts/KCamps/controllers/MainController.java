@@ -84,9 +84,9 @@ public class MainController {
             Model model) {
         Iterable<Camp> result;
         if (from.equals("loc")) {
-            result = campService.findByTag(Location.getByName(criteria), null, null);
+            result = campService.findByTag(Location.getByDescription(criteria), null, null);
         } else if (from.equals("inter")) {
-            result = campService.findByTag(null, Interesting.getByName(criteria), null);
+            result = campService.findByTag(null, Interesting.getByDescription(criteria), null);
         } else if (from.equals("hood")) {
             result = campService.findByTag(null, null, Childhood.valueOf(criteria));
         } else {
@@ -103,12 +103,12 @@ public class MainController {
                          @RequestParam(value = "childhoods", required = false) String[] childhoods,
                          Model model) {
 
-        Set<Interesting> interestingSet = interests==null ? new HashSet<>() : EnumUtil.getInterests(interests);
-        Set<Location> locationSet = locations==null ? new HashSet<>() : EnumUtil.getLocations(locations);
-        Set<Childhood> childhoodSet = childhoods==null ? new HashSet<>() : EnumUtil.getChildhoods(childhoods);
+        Set<Interesting> interestingSet = interests == null ? new HashSet<>() : EnumUtil.getInterests(interests);
+        Set<Location> locationSet = locations == null ? new HashSet<>() : EnumUtil.getLocations(locations);
+        Set<Childhood> childhoodSet = childhoods == null ? new HashSet<>() : EnumUtil.getChildhoods(childhoods);
 
         Iterable<Camp> byTags;
-        if (interests==null && locations==null) {
+        if (interests == null && locations == null) {
             byTags = campRepo.findAll();
         } else {
             byTags = campService.findByTags(locationSet, interestingSet, childhoodSet);
@@ -129,11 +129,9 @@ public class MainController {
             @AuthenticationPrincipal User user,
             Model model) {
         List<Camp> userCamps = campRepo.findAllByAuthor(user);
-        Optional<User> userFromDb = userRepo.findById(user.getId());
 
-        userFromDb.ifPresent(value -> model.addAttribute("userFormDb", value));
+        model.addAttribute("userFormDb", user);
         model.addAttribute("campError", false);
-
         model.addAttribute("userCamps", userCamps);
         ControllerUtil.addTags(model);
         return "profile";

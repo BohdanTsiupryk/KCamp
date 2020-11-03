@@ -32,14 +32,17 @@ public class UserController {
         return "orderList";
     }
 
-    @GetMapping("editor/{user}")
+    @GetMapping("editor/{userId}")
     @PreAuthorize("hasAuthority('USER') || hasAuthority('ADMIN')")
     public String userEditForm(
             @AuthenticationPrincipal User sessionUser,
-            @PathVariable User user,
+            @PathVariable Long userId,
             Model model
     ) {
-        if ((sessionUser.getRole().contains(Role.USER) && user.getId() == sessionUser.getId()) || sessionUser.getRole().contains(Role.ADMIN)) {
+        User user = userService.findById(userId);
+        if ((sessionUser.getRole().contains(Role.USER)
+                && user.getId() == sessionUser.getId())
+                || sessionUser.getRole().contains(Role.ADMIN)) {
             model.addAttribute("user", user);
             model.addAttribute("roles", Role.values());
             return "userEdit";
