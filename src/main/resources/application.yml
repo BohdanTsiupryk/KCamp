@@ -2,7 +2,7 @@ upload:
   path: ${java.io.tmpdir}/photos/
 
 server:
-  port: 8080
+  port: ${dev-port:80}
 spring:
   freemarker:
     expose-request-attributes: true
