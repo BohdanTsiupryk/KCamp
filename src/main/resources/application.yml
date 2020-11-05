@@ -29,3 +29,5 @@ spring:
             enable: true
           ssl:
             enable: true
+google:
+  apiKey: ${apiKey}

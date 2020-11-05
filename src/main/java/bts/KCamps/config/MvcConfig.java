@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 
 @Configuration
@@ -29,10 +30,18 @@ public class MvcConfig implements WebMvcConfigurer {
     @Bean
     public FreeMarkerViewResolver freemarkerViewResolver() {
         FreeMarkerViewResolver resolver = new FreeMarkerViewResolver();
-        resolver.setContentType("text/html; charset=windows-1251");
+        resolver.setContentType("text/html; charset=windows-1252");
         resolver.setCache(true);
         resolver.setPrefix("");
         resolver.setSuffix(".ftl");
+        resolver.setRequestContextAttribute("rc");
         return resolver;
+    }
+
+    @Bean
+    public FreeMarkerConfigurer getFreeMarkerConfigurer() {
+        FreeMarkerConfigurer freeMarkerConfigurer = new FreeMarkerConfigurer();
+        freeMarkerConfigurer.setDefaultEncoding("UTF-8");
+        return freeMarkerConfigurer;
     }
 }

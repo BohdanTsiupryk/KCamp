@@ -1,7 +1,9 @@
 <#include "parts/security.ftl">
 <#import "parts/common.ftl" as common>
+<#import "parts/mapMac.ftl" as googleMap>
 
 <@common.page>
+    <@googleMap.map camp.latitude camp.longitude/>
     <div class="container">
         <div class="row">
             <div class="col-6">
@@ -95,7 +97,7 @@
             </div>
         </div>
         <br>
-        <br>
+        <div class="modal-body"><div id="map"></div></div>
         <br>
         <div class="row">
             <div class="col">
