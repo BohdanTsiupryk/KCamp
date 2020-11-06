@@ -23,7 +23,7 @@
             </a>
         </p>
         <div class="collapse <#if campError>show</#if>" id="formAddCamp">
-            <form action="/camp/add" method="post" enctype="multipart/form-data">
+            <form action="/camp/add" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
                 <div class="form-group">
                     <label>Назва табору</label>
                     <input type="text" name="nameCamp" placeholder="Назва табору"  class="form-control ${(nameCampError??)?string('is-invalid','')}"

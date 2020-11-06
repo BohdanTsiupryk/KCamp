@@ -3,6 +3,7 @@ package bts.KCamps.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -27,12 +28,13 @@ public class MvcConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    public FreeMarkerViewResolver freemarkerViewResolver() {
+    public ViewResolver freemarkerViewResolver() {
         FreeMarkerViewResolver resolver = new FreeMarkerViewResolver();
         resolver.setContentType("text/html; charset=windows-1251");
         resolver.setCache(true);
         resolver.setPrefix("");
         resolver.setSuffix(".ftl");
+        resolver.setContentType("text/html; charset=UTF-8");
         return resolver;
     }
 }
