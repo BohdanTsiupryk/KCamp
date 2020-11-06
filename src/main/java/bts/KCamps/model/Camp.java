@@ -25,6 +25,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
@@ -42,24 +43,24 @@ public class Camp {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column(name = "address")
     private String address;
 
-    @Column(name = "nameCamp")
     private String nameCamp;
 
-    @Column(name = "description", length = 2048)
+    @Column(length = 2048)
     private String description;
 
-    @Column(name = "mainPicName")
     private String mainPicName;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User author;
 
-    @Column(name = "rating")
     private float rating;
+
+    private String latitude;
+
+    private String longitude;
 
     @OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Set<CampChange> changes = new HashSet<>();

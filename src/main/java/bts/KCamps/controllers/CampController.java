@@ -8,6 +8,7 @@ import bts.KCamps.repository.CampRepo;
 import bts.KCamps.repository.CommentsRepo;
 import bts.KCamps.repository.UserRepo;
 import bts.KCamps.service.CampService;
+import bts.KCamps.service.GoogleCallService;
 import bts.KCamps.service.impl.CampServiceImpl;
 import bts.KCamps.util.ControllerUtil;
 import bts.KCamps.util.EnumUtil;
@@ -38,9 +39,13 @@ public class CampController {
     private final CampService campService;
     private final UserRepo userRepo;
     private final CommentsRepo commentsRepo;
+    private final GoogleCallService googleCallService;
 
     @Value("${upload.path}")
     private String uploadPath;
+
+    @Value("${google.apiKey}")
+    private String apiKey;
 
     @GetMapping("/camp/profile/{campId}")
     public String getCampProfile(@PathVariable Long campId, Model model) {
@@ -50,6 +55,7 @@ public class CampController {
         camp.setComments(allByCamp);
         model.addAttribute("camp", camp);
         model.addAttribute("changes", changes);
+        model.addAttribute("apiKey", apiKey);
 
         return "campProfile";
     }
@@ -133,6 +139,9 @@ public class CampController {
             camp.setInteresting(EnumUtil.getInterests(interests));
             camp.setLocations(EnumUtil.getLocations(locations));
             camp.setChildhoods(EnumUtil.getChildhoods(childhoods));
+            String[] campCoordinationByAddress = googleCallService.getCampCoordinationByAddress(camp.getAddress());
+            camp.setLongitude(campCoordinationByAddress[0].replace(",", "."));
+            camp.setLatitude(campCoordinationByAddress[1].replace(",", "."));
             campService.addCamp(camp, user, image);
             model.addAttribute("campError", false);
             model.addAttribute("message", "Табір успішно доданий");

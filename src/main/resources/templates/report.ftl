@@ -9,10 +9,10 @@
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item"><h3><b>Теги</b></h3>
                         <#list report.locations as loc>
-                            <span class="badge badge-light">${loc.getName()}</span>
+                            <span class="badge badge-light">${loc.getDescription()}</span>
                         </#list>
                         <#list report.interests as loc>
-                            <span class="badge badge-info">${loc.getName()}</span>
+                            <span class="badge badge-info">${loc.getDescription()}</span>
                         </#list>
                         <#list report.childhoods as loc>
                             <span class="badge badge-dark">${loc.getDescription()}</span>
