@@ -9,6 +9,7 @@ import bts.KCamps.repository.CommentsRepo;
 import bts.KCamps.repository.UserRepo;
 import bts.KCamps.service.CampService;
 import bts.KCamps.service.GoogleCallService;
+import bts.KCamps.service.UserService;
 import bts.KCamps.service.impl.CampServiceImpl;
 import bts.KCamps.util.ControllerUtil;
 import bts.KCamps.util.EnumUtil;
@@ -37,12 +38,9 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class CampController {
     private final CampService campService;
-    private final UserRepo userRepo;
+    private final UserService userService;
     private final CommentsRepo commentsRepo;
     private final GoogleCallService googleCallService;
-
-    @Value("${upload.path}")
-    private String uploadPath;
 
     @Value("${google.apiKey}")
     private String apiKey;
@@ -148,10 +146,9 @@ public class CampController {
         }
 
         List<Camp> userCamps = campService.getAllByAuthor(user);
-        Optional<User> userFromDb = userRepo.findById(user.getId());
+        User userFromDb = userService.findById(user.getId());
 
-        userFromDb.ifPresent(value -> model.addAttribute("userFormDb", value));
-
+        model.addAttribute("userFormDb", userFromDb);
         model.addAttribute("userCamps", userCamps);
         ControllerUtil.addTags(model);
 

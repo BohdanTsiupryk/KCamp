@@ -4,6 +4,7 @@ import bts.KCamps.model.User;
 import bts.KCamps.service.MailService;
 import bts.KCamps.service.UserService;
 import bts.KCamps.util.ControllerUtil;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,14 +17,10 @@ import java.util.Map;
 import java.util.UUID;
 
 @Controller
+@RequiredArgsConstructor
 public class RegistrationController {
     private final UserService userService;
     private final MailService mailService;
-
-    public RegistrationController(UserService userService, MailService mailService) {
-        this.userService = userService;
-        this.mailService = mailService;
-    }
 
     @GetMapping("/registration")
     public String getRegForm() {

@@ -33,7 +33,6 @@ import java.util.stream.StreamSupport;
 @RequiredArgsConstructor
 public class CampServiceImpl implements CampService {
     private final CampRepo campRepo;
-    private final UserRepo userRepo;
     private final CommentsRepo commentsRepo;
 
     @Value("${upload.path}")
@@ -152,7 +151,7 @@ public class CampServiceImpl implements CampService {
         String uuidFile = UUID.randomUUID().toString();
         String resultFileName = uuidFile + "." + image.getOriginalFilename();
 
-        image.transferTo(new File(uploadPath + "/" + resultFileName));
+        image.transferTo(new File(uploadPath + File.pathSeparator + resultFileName));
         return resultFileName;
     }
 }

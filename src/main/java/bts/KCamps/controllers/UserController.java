@@ -3,6 +3,7 @@ package bts.KCamps.controllers;
 import bts.KCamps.enums.Role;
 import bts.KCamps.model.User;
 import bts.KCamps.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -17,12 +18,9 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/user")
+@RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
-
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
 
    @GetMapping("orders")
     public String getUserOrders(@AuthenticationPrincipal User user, Model model) {

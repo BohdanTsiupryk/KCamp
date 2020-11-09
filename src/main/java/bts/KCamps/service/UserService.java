@@ -21,10 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,8 +30,6 @@ public class UserService implements UserDetailsService {
     private static final Logger logger = LogManager.getLogger(UserService.class);
     private final UserRepo userRepo;
     private final PasswordEncoder passwordEncoder;
-    private final TripRepo tripRepo;
-    private final ChildRepo childRepo;
 
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
@@ -125,5 +120,15 @@ public class UserService implements UserDetailsService {
         }
 
         userRepo.saveAndFlush(user);
+    }
+
+    public List<User> getAll() {
+        return userRepo.findAll();
+    }
+
+    public void removeUser(Long user) {
+        User byId = userRepo.findById(user)
+                .orElseThrow(() -> new NotFoundException(user.toString(), User.class));
+        userRepo.delete(byId);
     }
 }

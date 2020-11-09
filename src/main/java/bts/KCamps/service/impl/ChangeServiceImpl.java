@@ -6,6 +6,7 @@ import bts.KCamps.model.CampChange;
 import bts.KCamps.repository.CampRepo;
 import bts.KCamps.repository.ChangeRepo;
 import bts.KCamps.service.ChangeService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,15 +16,11 @@ import java.util.Map;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ChangeServiceImpl implements ChangeService {
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private final ChangeRepo changeRepo;
     private final CampRepo campRepo;
-
-    public ChangeServiceImpl(ChangeRepo changeRepo, CampRepo campRepo) {
-        this.changeRepo = changeRepo;
-        this.campRepo = campRepo;
-    }
 
     @Transactional
     public void addChange(long id, Map<String, String> map) {

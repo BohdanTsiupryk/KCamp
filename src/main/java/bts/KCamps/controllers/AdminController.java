@@ -6,28 +6,20 @@ import bts.KCamps.model.ModeratorRequest;
 import bts.KCamps.model.User;
 import bts.KCamps.repository.RequestRepo;
 import bts.KCamps.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
 @Controller
+@RequiredArgsConstructor
 public class AdminController {
-    private final UserRepo userRepo;
     private final UserService userService;
     private final RequestRepo requestRepo;
-
-    public AdminController(UserRepo userRepo, UserService userService, RequestRepo requestRepo) {
-        this.userRepo = userRepo;
-        this.userService = userService;
-        this.requestRepo = requestRepo;
-    }
 
     @GetMapping("/request/delete/{req}")
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -47,8 +39,8 @@ public class AdminController {
 
     @GetMapping("/user/delete/{user}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public String deleteUser(@PathVariable User user) {
-        userRepo.delete(user);
+    public String deleteUser(@PathVariable Long user) {
+        userService.removeUser(user);
         return "redirect:/user";
     }
 
@@ -77,7 +69,7 @@ public class AdminController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public String userList(@AuthenticationPrincipal User user, Model model) {
         if (user.getRole().contains(Role.ADMIN)) {
-            Iterable<User> all = userRepo.findAll();
+            Iterable<User> all = userService.getAll();
             model.addAttribute("users", all);
             return "userList";
         }

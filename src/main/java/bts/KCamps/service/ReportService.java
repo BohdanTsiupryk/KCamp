@@ -8,6 +8,7 @@ import bts.KCamps.model.User;
 import bts.KCamps.model.report.CampReport;
 import bts.KCamps.model.report.ChangeReport;
 import bts.KCamps.repository.TripRepo;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,12 +20,9 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class ReportService {
     private final TripRepo tripRepo;
-
-    public ReportService(TripRepo tripRepo) {
-        this.tripRepo = tripRepo;
-    }
 
     public CampReport getCampReport(Camp camp) {
         CampReport campReport = new CampReport();

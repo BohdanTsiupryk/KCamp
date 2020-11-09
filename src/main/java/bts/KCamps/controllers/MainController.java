@@ -11,6 +11,7 @@ import bts.KCamps.service.impl.CampServiceImpl;
 import bts.KCamps.service.UserService;
 import bts.KCamps.util.ControllerUtil;
 import bts.KCamps.util.EnumUtil;
+import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -27,20 +28,11 @@ import java.util.List;
 import java.util.Set;
 
 @Controller
+@RequiredArgsConstructor
 public class MainController {
-    private static final Logger logger = LogManager.getLogger(MainController.class);
-
     private final CampRepo campRepo;
-    private final UserRepo userRepo;
     private final CampServiceImpl campService;
     private final UserService userService;
-
-    public MainController(CampRepo campRepo, UserRepo userRepo, CampServiceImpl campService, UserService userService) {
-        this.campRepo = campRepo;
-        this.userRepo = userRepo;
-        this.campService = campService;
-        this.userService = userService;
-    }
 
     @GetMapping("/login")
     public String login(HttpServletRequest request, Model model, String error, String logout) {
@@ -82,14 +74,19 @@ public class MainController {
             @PathVariable String from,
             Model model) {
         Iterable<Camp> result;
-        if (from.equals("loc")) {
-            result = campService.findByTag(Location.getByDescription(criteria), null, null);
-        } else if (from.equals("inter")) {
-            result = campService.findByTag(null, Interesting.getByDescription(criteria), null);
-        } else if (from.equals("hood")) {
-            result = campService.findByTag(null, null, Childhood.valueOf(criteria));
-        } else {
-            result = campRepo.findAll();
+        switch (from) {
+            case "loc":
+                result = campService.findByTag(Location.getByDescription(criteria), null, null);
+                break;
+            case "inter":
+                result = campService.findByTag(null, Interesting.getByDescription(criteria), null);
+                break;
+            case "hood":
+                result = campService.findByTag(null, null, Childhood.valueOf(criteria));
+                break;
+            default:
+                result = campRepo.findAll();
+                break;
         }
         model.addAttribute("camps", result);
         ControllerUtil.addTags(model);
@@ -124,9 +121,7 @@ public class MainController {
     }
 
     @GetMapping("/profile")
-    public String profile(
-            @AuthenticationPrincipal User user,
-            Model model) {
+    public String profile( @AuthenticationPrincipal User user, Model model) {
         List<Camp> userCamps = campRepo.findAllByAuthor(user);
 
         model.addAttribute("userFormDb", user);
@@ -140,11 +135,10 @@ public class MainController {
     public String activation(@PathVariable String code, Model model) {
         if (userService.checkCode(code)) {
             model.addAttribute("message", "Успішно активовано!");
-            model.addAttribute("alert", "success");
         } else {
             model.addAttribute("message", "Вже активовано!");
-            model.addAttribute("alert", "success");
         }
+        model.addAttribute("alert", "success");
 
         return "login";
     }
