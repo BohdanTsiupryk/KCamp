@@ -1,6 +1,7 @@
 package bts.KCamps.service.impl;
 
 import bts.KCamps.exception.NotFoundException;
+import bts.KCamps.model.GoogleCampCoordinate;
 import bts.KCamps.repository.CampRepo;
 import bts.KCamps.repository.CommentsRepo;
 import bts.KCamps.repository.UserRepo;
@@ -11,6 +12,7 @@ import bts.KCamps.model.Camp;
 import bts.KCamps.model.Comment;
 import bts.KCamps.model.User;
 import bts.KCamps.service.CampService;
+import bts.KCamps.service.GoogleCallService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -34,6 +36,7 @@ import java.util.stream.StreamSupport;
 public class CampServiceImpl implements CampService {
     private final CampRepo campRepo;
     private final CommentsRepo commentsRepo;
+    private final GoogleCallService callService;
 
     @Value("${upload.path}")
     private String uploadPath;
@@ -51,7 +54,9 @@ public class CampServiceImpl implements CampService {
             Camp camp = campFromDb.get();
             if (camp.getAuthor().getId() == user.getId()) {
                 camp.setNameCamp(form.get("campName"));
+                camp.setAddress(form.get("address"));
                 camp.setDescription(form.get("description"));
+                camp.setCoordinate(callService.getCampCoordinate(camp));
                 setNewMainPicture(camp, image);
                 campRepo.save(camp);
             }
@@ -79,13 +84,11 @@ public class CampServiceImpl implements CampService {
     }
 
     @Transactional
-    public void addCamp(Camp camp,
-                        User user,
-                        MultipartFile image) throws IOException {
-
+    public void addCamp(Camp camp, User user, MultipartFile image) throws IOException {
         camp.setAuthor(user);
         setNewMainPicture(camp, image);
-
+        GoogleCampCoordinate campCoordinate = callService.getCampCoordinate(camp);
+        camp.setCoordinate(campCoordinate);
         campRepo.save(camp);
     }
 
@@ -151,7 +154,7 @@ public class CampServiceImpl implements CampService {
         String uuidFile = UUID.randomUUID().toString();
         String resultFileName = uuidFile + "." + image.getOriginalFilename();
 
-        image.transferTo(new File(uploadPath + File.pathSeparator + resultFileName));
+        image.transferTo(new File(uploadPath + File.separator + resultFileName));
         return resultFileName;
     }
 }

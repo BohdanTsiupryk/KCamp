@@ -40,7 +40,6 @@ public class CampController {
     private final CampService campService;
     private final UserService userService;
     private final CommentsRepo commentsRepo;
-    private final GoogleCallService googleCallService;
 
     @Value("${google.apiKey}")
     private String apiKey;
@@ -54,6 +53,7 @@ public class CampController {
         model.addAttribute("camp", camp);
         model.addAttribute("changes", changes);
         model.addAttribute("apiKey", apiKey);
+        model.addAttribute("coords", camp.getCoordinate());
 
         return "campProfile";
     }
@@ -137,9 +137,6 @@ public class CampController {
             camp.setInteresting(EnumUtil.getInterests(interests));
             camp.setLocations(EnumUtil.getLocations(locations));
             camp.setChildhoods(EnumUtil.getChildhoods(childhoods));
-            String[] campCoordinationByAddress = googleCallService.getCampCoordinationByAddress(camp.getAddress());
-            camp.setLongitude(campCoordinationByAddress[0].replace(",", "."));
-            camp.setLatitude(campCoordinationByAddress[1].replace(",", "."));
             campService.addCamp(camp, user, image);
             model.addAttribute("campError", false);
             model.addAttribute("message", "Табір успішно доданий");

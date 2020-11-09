@@ -34,8 +34,8 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = {"author","changes","comments"})
-@EqualsAndHashCode(exclude = {"author","changes","comments"})
+@ToString(exclude = {"author", "changes", "comments", "coordinate"})
+@EqualsAndHashCode(exclude = {"author", "changes", "comments", "coordinate"})
 @Entity
 @Table
 public class Camp {
@@ -58,9 +58,8 @@ public class Camp {
 
     private float rating;
 
-    private String latitude;
-
-    private String longitude;
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.MERGE})
+    private GoogleCampCoordinate coordinate;
 
     @OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Set<CampChange> changes = new HashSet<>();

@@ -1,4 +1,4 @@
-<#macro map lat long apiKey>
+<#macro map lat lng apiKey>
     <style type="text/css">
         #map {
             height: 600px;
@@ -9,9 +9,9 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=${apiKey}&callback=initMap&libraries=&v=weekly" defer ></script>
     <script type="text/javascript" >
         function initMap() {
-            const camp = new google.maps.LatLng(parseFloat(${long}), parseFloat(${lat}));
+            const camp = new google.maps.LatLng(parseFloat(${lat}), parseFloat(${lng}));
             const map = new google.maps.Map(document.getElementById("map"), {
-                zoom: 15,
+                zoom: 14,
                 center: camp
             });
             const marker = new google.maps.Marker({

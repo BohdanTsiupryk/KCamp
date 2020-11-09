@@ -3,7 +3,7 @@
 <#import "parts/mapMac.ftl" as googleMap>
 
 <@common.page>
-    <@googleMap.map camp.latitude camp.longitude apiKey/>
+    <@googleMap.map coords.latitude coords.longitude apiKey/>
     <div class="container">
         <div class="row">
             <div class="col-6">
