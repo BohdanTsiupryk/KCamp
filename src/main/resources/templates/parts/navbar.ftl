@@ -25,12 +25,17 @@
                 <a class="nav-link" href="/profile">Профіль</a>
             </li>
         </ul>
+        <form class="form-inline my-5 my-lg-0" action="/search" method="get" name="search" enctype="multipart/form-data">
+            <input class="form-control mr-sm-2" name="query" type="text" placeholder="Ліс, підліток..." aria-label="Search">
+            <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Пошук</button>
+        </form>
         <#if name=="unknown">
-            <biv class="nav-item">
+            <biv class="nav-item ml-5">
                 <a class="nav-link" href="/login">Увійти</a>
             </biv>
         <#else>
-            <div class="nav-item">
+            <div class="nav-item ml-5">
                 <form action="/logout" method="post">
                     <button type="submit" class="btn btn-primary mr-2" >Вийти</button>
                     <input type="hidden" name="_csrf" value="${_csrf.token}"/>

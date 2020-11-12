@@ -1,10 +1,10 @@
 package bts.KCamps.service.impl;
 
+import bts.KCamps.dto.CampIdDescriptionDto;
 import bts.KCamps.exception.NotFoundException;
 import bts.KCamps.model.GoogleCampCoordinate;
 import bts.KCamps.repository.CampRepo;
 import bts.KCamps.repository.CommentsRepo;
-import bts.KCamps.repository.UserRepo;
 import bts.KCamps.enums.Childhood;
 import bts.KCamps.enums.Interesting;
 import bts.KCamps.enums.Location;
@@ -15,6 +15,8 @@ import bts.KCamps.service.CampService;
 import bts.KCamps.service.GoogleCallService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,7 +31,6 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Service
 @RequiredArgsConstructor
@@ -42,11 +43,13 @@ public class CampServiceImpl implements CampService {
     private String uploadPath;
 
     @Transactional
+    @CacheEvict("description")
     public void deleteCamp(Camp camp) {
         campRepo.delete(camp);
     }
 
     @Transactional
+    @CacheEvict("description")
     public void updateCamp(Map<String, String> form, User user, MultipartFile image) throws IOException {
         Optional<Camp> campFromDb = campRepo.findById(Long.valueOf(form.get("id")));
 
@@ -84,6 +87,7 @@ public class CampServiceImpl implements CampService {
     }
 
     @Transactional
+    @CacheEvict("description")
     public void addCamp(Camp camp, User user, MultipartFile image) throws IOException {
         camp.setAuthor(user);
         setNewMainPicture(camp, image);
@@ -139,6 +143,17 @@ public class CampServiceImpl implements CampService {
     @Override
     public List<Camp> getAllByAuthor(User user) {
         return campRepo.findAllByAuthor(user);
+    }
+
+    @Override
+    @Cacheable("description")
+    public List<CampIdDescriptionDto> getAllDescriptions() {
+        return campRepo.getDescriptions();
+    }
+
+    @Override
+    public List<Camp> findByIds(List<Long> ids) {
+        return campRepo.findAllByIdIn(ids);
     }
 
     private void setNewMainPicture(Camp camp, MultipartFile image) throws IOException {

@@ -1,11 +1,14 @@
 <#import "parts/common.ftl" as common>
 
 <@common.page>
-    <div class="mt-3">
-        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#filter" aria-expanded="false" aria-controls="collapseExample">
-            Фільтр
-        </button>
-        <a class="btn btn-primary" href="/sort" role="button">Відсортувати по рейтингу</a>
+    <div class="input-group shadow-sm p-3 mb-5 bg-white rounded">
+        <div class="input-group-prepend" id="button-addon3">
+            <button class="btn btn-outline-secondary" type="button" data-toggle="collapse" data-target="#filter"
+                    aria-expanded="false" aria-controls="collapseExample">
+                Фільтр
+            </button>
+            <a class="btn btn-outline-secondary" href="/sort" role="button">Відсортувати по рейтингу</a>
+        </div>
     </div>
     <div class="collapse" id="filter">
         <form action="/filter" method="post" name="filter" enctype="multipart/form-data">
@@ -58,7 +61,7 @@
                         </#if>
                     </span>
                 </div>
-                <div  class="card-footer text-muted">
+                <div class="card-footer text-muted">
                     ${camp.author.username}
                 </div>
             </div>

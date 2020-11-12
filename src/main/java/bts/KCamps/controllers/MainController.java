@@ -7,6 +7,7 @@ import bts.KCamps.enums.Interesting;
 import bts.KCamps.enums.Location;
 import bts.KCamps.model.Camp;
 import bts.KCamps.model.User;
+import bts.KCamps.service.CampService;
 import bts.KCamps.service.impl.CampServiceImpl;
 import bts.KCamps.service.UserService;
 import bts.KCamps.util.ControllerUtil;
@@ -31,7 +32,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class MainController {
     private final CampRepo campRepo;
-    private final CampServiceImpl campService;
+    private final CampService campService;
     private final UserService userService;
 
     @GetMapping("/login")

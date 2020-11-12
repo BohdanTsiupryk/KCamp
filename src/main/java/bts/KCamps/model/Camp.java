@@ -9,7 +9,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
@@ -24,21 +23,29 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
 import java.util.Set;
+
+import static bts.KCamps.model.Camp.GET_DESCRIPTIONS;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString(exclude = {"author", "changes", "comments", "coordinate"})
 @EqualsAndHashCode(exclude = {"author", "changes", "comments", "coordinate"})
+@NamedQueries(value = {
+        @NamedQuery(name = GET_DESCRIPTIONS, query = "SELECT c.id, c.description FROM Camp c")
+})
 @Entity
 @Table
 public class Camp {
+    public static final String GET_DESCRIPTIONS = "getDescriptions";
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
