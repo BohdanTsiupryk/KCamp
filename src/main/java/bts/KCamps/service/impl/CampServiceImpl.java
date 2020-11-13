@@ -146,7 +146,6 @@ public class CampServiceImpl implements CampService {
     }
 
     @Override
-    @Cacheable("description")
     public List<CampIdDescriptionDto> getAllDescriptions() {
         return campRepo.getDescriptions();
     }

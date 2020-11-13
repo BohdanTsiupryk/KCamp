@@ -3,6 +3,7 @@ package bts.KCamps.repository.impl;
 import bts.KCamps.dto.CampIdDescriptionDto;
 import bts.KCamps.model.Camp;
 import bts.KCamps.repository.CustomCampRepo;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -18,6 +19,7 @@ public class CustomCampRepoImpl implements CustomCampRepo {
     private EntityManager em;
 
     @Override
+    @Cacheable("description")
     public List<CampIdDescriptionDto> getDescriptions() {
         TypedQuery<Tuple> query = em.createNamedQuery(Camp.GET_DESCRIPTIONS, Tuple.class);
 

@@ -39,6 +39,7 @@ public class SearchServiceImpl implements SearchService {
 
     private Stream<CampIdDescriptionDto> calculateWage(List<CampIdDescriptionDto> descriptionDtos, Set<String> words) {
         return descriptionDtos.stream()
+                .peek(desc -> desc.setWage(0))
                 .peek(desc -> words.forEach(w -> checkContains(desc, w)))
                 .filter(CampIdDescriptionDto::isWageNotZero)
                 .sorted(Comparator.comparingInt(CampIdDescriptionDto::getWage));

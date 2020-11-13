@@ -10,11 +10,12 @@ import lombok.NoArgsConstructor;
 public class CampIdDescriptionDto {
     private Long id;
     private String description;
-    private int wage = 0;
+    private int wage;
 
     public CampIdDescriptionDto(Long id, String description) {
         this.id = id;
         this.description = description;
+        this.wage = 0;
     }
 
     public void incrementWage() {
