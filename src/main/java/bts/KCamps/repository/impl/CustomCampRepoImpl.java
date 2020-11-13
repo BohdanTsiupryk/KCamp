@@ -1,6 +1,7 @@
 package bts.KCamps.repository.impl;
 
 import bts.KCamps.dto.CampIdDescriptionDto;
+import bts.KCamps.dto.CampIdLocationDto;
 import bts.KCamps.model.Camp;
 import bts.KCamps.repository.CustomCampRepo;
 import org.springframework.cache.annotation.Cacheable;
@@ -26,6 +27,17 @@ public class CustomCampRepoImpl implements CustomCampRepo {
         return query.getResultList()
                 .stream()
                 .map(t -> new CampIdDescriptionDto(t.get(0, Long.class), t.get(1, String.class)))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    @Cacheable("location")
+    public List<CampIdLocationDto> getCampsCoordinate() {
+        TypedQuery<Tuple> query = em.createNamedQuery(Camp.GET_COORDINATES, Tuple.class);
+
+        return query.getResultList()
+                .stream()
+                .map(t -> new CampIdLocationDto(t.get(0, Long.class), t.get(1, String.class), t.get(2, String.class)))
                 .collect(Collectors.toList());
     }
 }

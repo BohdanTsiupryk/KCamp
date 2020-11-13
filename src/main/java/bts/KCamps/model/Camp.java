@@ -31,6 +31,7 @@ import javax.persistence.Table;
 import java.util.HashSet;
 import java.util.Set;
 
+import static bts.KCamps.model.Camp.GET_COORDINATES;
 import static bts.KCamps.model.Camp.GET_DESCRIPTIONS;
 
 @Data
@@ -39,12 +40,14 @@ import static bts.KCamps.model.Camp.GET_DESCRIPTIONS;
 @ToString(exclude = {"author", "changes", "comments", "coordinate"})
 @EqualsAndHashCode(exclude = {"author", "changes", "comments", "coordinate"})
 @NamedQueries(value = {
-        @NamedQuery(name = GET_DESCRIPTIONS, query = "SELECT c.id, c.description FROM Camp c")
+        @NamedQuery(name = GET_DESCRIPTIONS, query = "SELECT c.id, c.description FROM Camp c"),
+        @NamedQuery(name = GET_COORDINATES, query = "SELECT c.id, c.coordinate.latitude, c.coordinate.longitude FROM Camp c")
 })
 @Entity
 @Table
 public class Camp {
     public static final String GET_DESCRIPTIONS = "getDescriptions";
+    public static final String GET_COORDINATES = "getCoordinates";
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

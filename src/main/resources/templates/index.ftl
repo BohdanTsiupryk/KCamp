@@ -1,6 +1,15 @@
 <#import "parts/common.ftl" as common>
 
 <@common.page>
+    <div>
+        <form action="/search/location" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
+            <input type="text" name="lat" placeholder="Назва табору"  class="form-control" value="49.5030"/>
+            <input type="text" name="lng" placeholder="Назва табору"  class="form-control" value="24.0153"/>
+            <input type="text" name="maxDistance" placeholder="Назва табору"  class="form-control" value="1000"/>
+            <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+            <input type="submit" value="Додати" class="btn btn-primary"/>
+        </form>
+    </div>
     <div class="input-group shadow-sm p-3 mb-5 bg-white rounded">
         <div class="input-group-prepend" id="button-addon3">
             <button class="btn btn-outline-secondary" type="button" data-toggle="collapse" data-target="#filter"

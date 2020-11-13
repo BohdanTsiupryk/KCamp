@@ -1,6 +1,7 @@
 package bts.KCamps.service.impl;
 
 import bts.KCamps.dto.CampIdDescriptionDto;
+import bts.KCamps.dto.CampIdLocationDto;
 import bts.KCamps.exception.NotFoundException;
 import bts.KCamps.model.GoogleCampCoordinate;
 import bts.KCamps.repository.CampRepo;
@@ -43,13 +44,13 @@ public class CampServiceImpl implements CampService {
     private String uploadPath;
 
     @Transactional
-    @CacheEvict("description")
+    @CacheEvict({"description", "location"})
     public void deleteCamp(Camp camp) {
         campRepo.delete(camp);
     }
 
     @Transactional
-    @CacheEvict("description")
+    @CacheEvict({"description", "location"})
     public void updateCamp(Map<String, String> form, User user, MultipartFile image) throws IOException {
         Optional<Camp> campFromDb = campRepo.findById(Long.valueOf(form.get("id")));
 
@@ -87,7 +88,7 @@ public class CampServiceImpl implements CampService {
     }
 
     @Transactional
-    @CacheEvict("description")
+    @CacheEvict({"description", "location"})
     public void addCamp(Camp camp, User user, MultipartFile image) throws IOException {
         camp.setAuthor(user);
         setNewMainPicture(camp, image);
@@ -146,8 +147,15 @@ public class CampServiceImpl implements CampService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<CampIdDescriptionDto> getAllDescriptions() {
         return campRepo.getDescriptions();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<CampIdLocationDto> getAllLocations() {
+        return campRepo.getCampsCoordinate();
     }
 
     @Override

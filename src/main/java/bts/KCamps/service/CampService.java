@@ -1,6 +1,7 @@
 package bts.KCamps.service;
 
 import bts.KCamps.dto.CampIdDescriptionDto;
+import bts.KCamps.dto.CampIdLocationDto;
 import bts.KCamps.enums.Childhood;
 import bts.KCamps.enums.Interesting;
 import bts.KCamps.enums.Location;
@@ -35,6 +36,8 @@ public interface CampService {
     List<Camp> getAllByAuthor(User user);
 
     List<CampIdDescriptionDto> getAllDescriptions();
+
+    List<CampIdLocationDto> getAllLocations();
 
     List<Camp> findByIds(List<Long> ids);
 }
