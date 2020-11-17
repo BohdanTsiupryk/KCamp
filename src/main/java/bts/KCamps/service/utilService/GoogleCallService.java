@@ -1,5 +1,6 @@
 package bts.KCamps.service.utilService;
 
+import bts.KCamps.dto.CurrentLocationDto;
 import bts.KCamps.model.Camp;
 import bts.KCamps.model.GoogleCampCoordinate;
 import com.google.gson.JsonArray;
@@ -29,6 +30,27 @@ public class GoogleCallService {
         JsonObject object = JsonParser.parseString(json.getBody()).getAsJsonObject();
 
         return object;
+    }
+
+    public CurrentLocationDto findCoordinateByAddress(String address) {
+        try {
+            JsonObject obj = getCampCoordinationByAddress(address);
+            JsonObject results = obj.getAsJsonArray("results")
+                    .get(0)
+                    .getAsJsonObject();
+            JsonObject location = results
+                    .getAsJsonObject("geometry")
+                    .getAsJsonObject("location");
+
+            String formattedAddress = results.getAsJsonPrimitive("formatted_address").getAsString();
+            String lat = location.getAsJsonPrimitive("lat").getAsString();
+            String lng = location.getAsJsonPrimitive("lng").getAsString();
+
+            return new CurrentLocationDto(Double.parseDouble(lat), Double.parseDouble(lng));
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public GoogleCampCoordinate getCampCoordinate(Camp camp) {

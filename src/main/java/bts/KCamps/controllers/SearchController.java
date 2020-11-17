@@ -32,8 +32,8 @@ public class SearchController {
     }
 
     @PostMapping("/location")
-    public String searchLocation(CurrentLocationDto query, Model model) {
-        List<Camp> camps = searchService.findByLocation(query);
+    public String searchLocation(String address, int maxDistance, Model model) {
+        List<Camp> camps = searchService.findByLocation(address, maxDistance);
         if (camps.isEmpty()) {
             return "redirect:index";
         }

@@ -7,6 +7,7 @@ import bts.KCamps.model.Camp;
 import bts.KCamps.repository.CampRepo;
 import bts.KCamps.service.CampService;
 import bts.KCamps.service.SearchService;
+import bts.KCamps.service.utilService.GoogleCallService;
 import bts.KCamps.util.SearchUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.util.Pair;
@@ -22,6 +23,7 @@ import java.util.stream.Stream;
 public class SearchServiceImpl implements SearchService {
     private final CampRepo campRepo;
     private final CampService campService;
+    private final GoogleCallService googleCallService;
 
     @Override
     public List<Camp> findByParameters(String param) {
@@ -41,9 +43,10 @@ public class SearchServiceImpl implements SearchService {
     }
 
     @Override
-    public List<Camp> findByLocation(CurrentLocationDto currentLocation) {
+    public List<Camp> findByLocation(String address, int maxDistance) {
         List<CampIdLocationDto> allLocations = campService.getAllLocations();
-
+        CurrentLocationDto currentLocation = googleCallService.findCoordinateByAddress(address);
+        currentLocation.setMaxDistance(maxDistance);
         return allLocations.stream()
                 .map(l -> Pair.of(l.getCampId(), SearchUtil.getDistance(l, currentLocation)))
                 .filter(p -> p.getSecond() / 1000 < currentLocation.getMaxDistance() )

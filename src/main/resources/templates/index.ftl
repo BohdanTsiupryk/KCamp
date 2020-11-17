@@ -3,11 +3,12 @@
 <@common.page>
     <div>
         <form action="/search/location" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
-            <input type="text" name="lat" placeholder="Назва табору"  class="form-control" value="49.5030"/>
-            <input type="text" name="lng" placeholder="Назва табору"  class="form-control" value="24.0153"/>
-            <input type="text" name="maxDistance" placeholder="Назва табору"  class="form-control" value="1000"/>
-            <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-            <input type="submit" value="Додати" class="btn btn-primary"/>
+            <div class="row">
+                <div class="col"><input type="text" name="address" placeholder="Ваша адреса"  class="form-control" value="Львів"/></div>
+                <div class="col"><input type="text" name="maxDistance" placeholder="Район пошуку у км"  class="form-control" value="100"/></div>
+                <div class="col"><input type="hidden" name="_csrf" value="${_csrf.token}"/></div>
+                <div class="col"><input type="submit" value="Шукати поряд" class="btn btn-primary"/></div>
+            </div>
         </form>
     </div>
     <div class="input-group shadow-sm p-3 mb-5 bg-white rounded">
