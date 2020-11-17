@@ -34,6 +34,10 @@ public class SearchController {
     @PostMapping("/location")
     public String searchLocation(CurrentLocationDto query, Model model) {
         List<Camp> camps = searchService.findByLocation(query);
+        if (camps.isEmpty()) {
+            return "redirect:index";
+        }
+
         List<GoogleCampCoordinate> coords = camps.stream().map(Camp::getCoordinate).collect(Collectors.toList());
 
         model.addAttribute("camps", camps);
