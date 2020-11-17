@@ -1,4 +1,4 @@
-package bts.KCamps.service;
+package bts.KCamps.service.utilService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

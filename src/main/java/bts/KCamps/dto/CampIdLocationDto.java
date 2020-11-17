@@ -7,12 +7,12 @@ import lombok.Data;
 @AllArgsConstructor
 public class CampIdLocationDto {
     private long campId;
-    private float lat;
-    private float lng;
+    private double lat;
+    private double lng;
 
     public CampIdLocationDto(long campId, String lat, String lng) {
         this.campId = campId;
-        this.lat = Float.parseFloat(lat);
-        this.lng = Float.parseFloat(lng);
+        this.lat = Double.parseDouble(lat);
+        this.lng = Double.parseDouble(lng);
     }
 }

@@ -1,8 +1,8 @@
 package bts.KCamps.controllers;
 
 import bts.KCamps.model.User;
-import bts.KCamps.service.MailService;
 import bts.KCamps.service.UserService;
+import bts.KCamps.service.utilService.MailService;
 import bts.KCamps.util.ControllerUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.validation.Valid;
 import java.util.Map;
 import java.util.UUID;
 

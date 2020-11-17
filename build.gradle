@@ -32,6 +32,8 @@ dependencies {
 	compile 'com.google.api-client:google-api-client:1.30.10'
 	compile group: 'com.google.maps', name: 'google-maps-services', version: '0.15.0'
 
+	compile group: 'com.amazonaws', name: 'aws-java-sdk', version: '1.11.893'
+
 	compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.13.3'
 	compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.13.3'
 	testCompile group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: '2.13.3'

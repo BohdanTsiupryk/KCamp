@@ -1,4 +1,4 @@
-package bts.KCamps.service;
+package bts.KCamps.service.utilService;
 
 import bts.KCamps.model.Camp;
 import bts.KCamps.model.GoogleCampCoordinate;

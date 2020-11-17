@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class CurrentLocationDto {
-    private float lat;
-    private float lng;
+    private double lat;
+    private double lng;
     private int maxDistance;
 }

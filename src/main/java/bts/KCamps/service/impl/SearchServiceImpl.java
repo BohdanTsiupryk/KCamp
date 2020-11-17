@@ -7,6 +7,7 @@ import bts.KCamps.model.Camp;
 import bts.KCamps.repository.CampRepo;
 import bts.KCamps.service.CampService;
 import bts.KCamps.service.SearchService;
+import bts.KCamps.util.SearchUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
@@ -44,16 +45,10 @@ public class SearchServiceImpl implements SearchService {
         List<CampIdLocationDto> allLocations = campService.getAllLocations();
 
         return allLocations.stream()
-                .map(l -> Pair.of(l.getCampId(), getDistance(l, currentLocation)))
-                .filter(p -> p.getSecond() < currentLocation.getMaxDistance())
+                .map(l -> Pair.of(l.getCampId(), SearchUtil.getDistance(l, currentLocation)))
+                .filter(p -> p.getSecond() / 1000 < currentLocation.getMaxDistance() )
                 .map(p -> campService.getById(p.getFirst()))
                 .collect(Collectors.toList());
-    }
-
-    private double getDistance(CampIdLocationDto campLocation, CurrentLocationDto currentLocation) {
-        float latD = currentLocation.getLat() - campLocation.getLat();
-        float lngD = currentLocation.getLng() - campLocation.getLng();
-        return Math.sqrt(Math.pow(latD, 2) + Math.pow(lngD, 2));
     }
 
     private Stream<CampIdDescriptionDto> calculateWage(List<CampIdDescriptionDto> descriptionDtos, Set<String> words) {
