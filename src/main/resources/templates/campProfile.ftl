@@ -7,7 +7,7 @@
     <div class="container">
         <div class="row">
             <div class="col-6">
-                <img src="/img/${camp.mainPicName}" alt="${camp.mainPicName}">
+                <img src="${camp.mainPicName}" alt="${camp.mainPicName}">
                 <br>
                 <#list camp.locations as location>
                     <a href="/filter/loc/${location}" class="badge badge-light">${location.getDescription()}</a>
@@ -39,7 +39,7 @@
                     <div class="carousel-inner">
                         <#list camp.campPhotos as photo>
                             <div class="carousel-item <#if photo_index==0>active</#if>">
-                                <img src="/img/${photo}" height="50%" class="d-block w-100" alt="${photo}" />
+                                <img src="${photo}" height="50%" class="d-block w-100" alt="${photo}" />
                             </div>
                         </#list>
                     </div>

@@ -15,7 +15,7 @@
                     <#if camp.rating != 0>Рейтинг ${camp.rating}/10 <#else> Ніхто не оцінив табір </#if>
                 </div>
                 <#if camp.mainPicName??>
-                    <img class="card-img-top" src="/img/${camp.mainPicName}" height="200">
+                    <img class="card-img-top" src="${camp.mainPicName}" height="200">
                 </#if>
                 <div class="m-2">
                     <span class="card-text">

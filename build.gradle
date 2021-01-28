@@ -19,7 +19,8 @@ repositories {
 }
 
 dependencies {
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	implementation 'org.jetbrains:annotations:19.0.0'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
@@ -28,6 +29,8 @@ dependencies {
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-cache', version: '2.3.5.RELEASE'
 	compile group: 'org.freemarker', name: 'freemarker', version: '2.3.30'
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '2.3.4.RELEASE'
+
+	compile group: 'com.amazonaws', name: 'aws-java-sdk', version: '1.11.944'
 
 	compile 'com.google.api-client:google-api-client:1.30.10'
 	compile group: 'com.google.maps', name: 'google-maps-services', version: '0.15.0'

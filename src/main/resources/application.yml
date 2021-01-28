@@ -1,5 +1,5 @@
 upload:
-  path: ${java.io.tmpdir}/photos/
+  path: ${uploadPath}
 
 server:
   port: ${dev-port:80}
@@ -15,7 +15,7 @@ spring:
     initialization-mode: always
     username: ${SPRING_DATASOURCE_USERNAME:postgres}
     password: ${SPRING_DATASOURCE_PASSWORD:1}
-    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/kcamp}
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost/kcamp}
   mail:
     host: smtp.gmail.com
     username: ostapivkidcamp@gmail.com
@@ -32,3 +32,8 @@ spring:
             enable: true
 google:
   apiKey: ${apiKey}
+amazonProperties:
+  endpointUrl: https://kcamp.s3.eu-north-1.amazonaws.com
+  accessKey: ${amazonKey}
+  secretKey: ${amazonSecret}
+  bucketName: kcamp

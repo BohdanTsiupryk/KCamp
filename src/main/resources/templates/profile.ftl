@@ -109,7 +109,7 @@
                             </td>
                             <td>
                                 <#if camp.mainPicName??>
-                                    <img class="rounded float-left" src="/img/${camp.mainPicName}" width="200" height="200">
+                                    <img class="rounded float-left" src="${camp.mainPicName}" width="200" height="200">
                                 </#if>
                             </td>
                             <td><a href="/camp/${camp.id}">Редагувати</a></td>

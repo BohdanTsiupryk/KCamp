@@ -25,12 +25,12 @@
                 <textarea class="form-control" name="description"  name="description">${camp.description}</textarea>
             </div>
             <div class="input-group input-group-sm mb-3">
-                <img src="/img/${camp.mainPicName}" alt="Main Picture" class="rounded float-left" height="200" />
+                <img src="${camp.mainPicName}" alt="Main Picture" class="rounded float-left" height="200" />
 
             </div>
             <div class="input-group input-group-sm mb-3">
                 <#list camp.campPhotos as photo>
-                    <img class="rounded float-left" src="/img/${photo}" height="200" class="d-block w-200" alt="${photo}" />
+                    <img class="rounded float-left" src="${photo}" height="200" class="d-block w-200" alt="${photo}" />
                 </#list>
             </div>
             <div class="input-group mb-3">

@@ -12,6 +12,7 @@ import bts.KCamps.repository.CommentsRepo;
 import bts.KCamps.enums.Childhood;
 import bts.KCamps.enums.Interesting;
 import bts.KCamps.enums.Location;
+import bts.KCamps.service.AmazonClient;
 import bts.KCamps.service.CampService;
 import bts.KCamps.service.utilService.GoogleCallService;
 import lombok.RequiredArgsConstructor;
@@ -38,6 +39,7 @@ public class CampServiceImpl implements CampService {
     private final CampRepo campRepo;
     private final CommentsRepo commentsRepo;
     private final GoogleCallService callService;
+    private final AmazonClient amazonClient;
 
     @Value("${upload.path}")
     private String uploadPath;
@@ -168,14 +170,7 @@ public class CampServiceImpl implements CampService {
         }
     }
 
-    private String uploadImage(MultipartFile image) throws IOException {
-        File uploadDir = new File(uploadPath);
-        if (!uploadDir.exists()) uploadDir.mkdir();
-
-        String uuidFile = UUID.randomUUID().toString();
-        String resultFileName = uuidFile + "." + image.getOriginalFilename();
-
-        image.transferTo(new File(uploadPath + File.separator + resultFileName));
-        return resultFileName;
+    private String uploadImage(MultipartFile image) {
+        return amazonClient.uploadFile(image);
     }
 }
