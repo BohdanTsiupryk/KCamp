@@ -48,6 +48,9 @@ public class CampServiceImpl implements CampService {
     @CacheEvict({"description", "location"})
     public void deleteCamp(Camp camp) {
         campRepo.delete(camp);
+        camp.getCampPhotos()
+                .forEach(url -> amazonClient.deleteFileFromS3Bucket(url));
+        amazonClient.deleteFileFromS3Bucket(camp.getMainPicName());
     }
 
     @Transactional
