@@ -1,6 +1,3 @@
-upload:
-  path: ${uploadPath}
-
 server:
   port: ${dev-port:80}
 spring:

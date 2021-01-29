@@ -2,6 +2,9 @@ package bts.KCamps.service.impl;
 
 import bts.KCamps.dto.CampIdDescriptionDto;
 import bts.KCamps.dto.CampIdLocationDto;
+import bts.KCamps.enums.Childhood;
+import bts.KCamps.enums.Interesting;
+import bts.KCamps.enums.Location;
 import bts.KCamps.exception.NotFoundException;
 import bts.KCamps.model.Camp;
 import bts.KCamps.model.Comment;
@@ -9,28 +12,21 @@ import bts.KCamps.model.GoogleCampCoordinate;
 import bts.KCamps.model.User;
 import bts.KCamps.repository.CampRepo;
 import bts.KCamps.repository.CommentsRepo;
-import bts.KCamps.enums.Childhood;
-import bts.KCamps.enums.Interesting;
-import bts.KCamps.enums.Location;
 import bts.KCamps.service.AmazonClient;
 import bts.KCamps.service.CampService;
 import bts.KCamps.service.utilService.GoogleCallService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -40,9 +36,6 @@ public class CampServiceImpl implements CampService {
     private final CommentsRepo commentsRepo;
     private final GoogleCallService callService;
     private final AmazonClient amazonClient;
-
-    @Value("${upload.path}")
-    private String uploadPath;
 
     @Transactional
     @CacheEvict({"description", "location"})
@@ -55,7 +48,7 @@ public class CampServiceImpl implements CampService {
 
     @Transactional
     @CacheEvict({"description", "location"})
-    public void updateCamp(Map<String, String> form, User user, MultipartFile image) throws IOException {
+    public void updateCamp(Map<String, String> form, User user, MultipartFile image) {
         Optional<Camp> campFromDb = campRepo.findById(Long.valueOf(form.get("id")));
 
         if (campFromDb.isPresent()) {
@@ -93,7 +86,7 @@ public class CampServiceImpl implements CampService {
 
     @Transactional
     @CacheEvict({"description", "location"})
-    public void addCamp(Camp camp, User user, MultipartFile image) throws IOException {
+    public void addCamp(Camp camp, User user, MultipartFile image) {
         camp.setAuthor(user);
         setNewMainPicture(camp, image);
         GoogleCampCoordinate campCoordinate = callService.getCampCoordinate(camp);
@@ -126,7 +119,7 @@ public class CampServiceImpl implements CampService {
     }
 
     @Transactional
-    public void addNewPhoto(Long id, Set<MultipartFile> photos) throws IOException {
+    public void addNewPhoto(Long id, Set<MultipartFile> photos) {
         Optional<Camp> campFromDb = campRepo.findById(id);
 
         if (campFromDb.isPresent()) {
@@ -167,7 +160,7 @@ public class CampServiceImpl implements CampService {
         return campRepo.findAllByIdIn(ids);
     }
 
-    private void setNewMainPicture(Camp camp, MultipartFile image) throws IOException {
+    private void setNewMainPicture(Camp camp, MultipartFile image) {
         if (image != null && !image.getOriginalFilename().isEmpty()) {
             camp.setMainPicName(uploadImage(image));
         }
