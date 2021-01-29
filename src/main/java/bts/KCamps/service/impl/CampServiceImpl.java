@@ -21,7 +21,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -97,14 +96,12 @@ public class CampServiceImpl implements CampService {
     @Transactional(readOnly = true)
     public List<Camp> findByTag(Location location, Interesting interest, Childhood childhood) {
         List<Camp> all = campRepo.findAll();
-        List<Camp> res = new ArrayList<>();
 
-        all.stream()
+        return all.stream()
                 .filter(camp -> camp.getLocations().contains(location))
                 .filter(camp -> camp.getChildhoods().contains(childhood))
                 .filter(camp -> camp.getInteresting().contains(interest))
-                .forEach(res::add);
-        return res;
+                .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
