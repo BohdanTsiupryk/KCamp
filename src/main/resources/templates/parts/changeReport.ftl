@@ -44,7 +44,7 @@
                     </#list>
                 ]);
                 var options = {
-                    title: ''
+                    title: '${name}' + ' statistic'
                 };
 
                 var chart = new google.visualization.PieChart(document.getElementById('${name}'));

@@ -26,6 +26,19 @@
                 </#list>
             </div>
             <#list report.changeReportList as changeRep>
+                <hr>
+                <@rep.diagram changeRep.userCity "city"/>
+                <@rep.diagram changeRep.childAge "age"/>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm">
+                            <div id="city"></div>
+                        </div>
+                        <div class="col-sm">
+                            <div id="age"></div>
+                        </div>
+                    </div>
+                </div>
                 <@rep.report changeRep/>
             </#list>
         <#else>
@@ -34,10 +47,10 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm">
-                        <div id="city" style="width: 500px; height: 400px;"></div>
+                        <div id="city" class="w-50 p-3" ></div>
                     </div>
                     <div class="col-sm">
-                        <div id="age" style="width: 500px; height: 400px;"></div>
+                        <div id="age" class="w-50 p-3"></div>
                     </div>
                 </div>
             </div>

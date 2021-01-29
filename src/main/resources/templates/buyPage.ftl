@@ -40,7 +40,7 @@
         <div class="form-group row">
             <label for="inputEmail3" class="col-sm-2 col-form-label">Адреса проживання</label>
             <div class="col-sm-10">
-                <input  type="text" class="form-control" name="address" value="${user?if_exists}" />
+                <input  type="text" class="form-control" name="address" value="${user.address?if_exists}" />
             </div>
         </div>
         <br>

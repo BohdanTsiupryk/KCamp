@@ -1,12 +1,10 @@
 package bts.KCamps.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.springframework.util.comparator.Comparators;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,12 +14,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.time.LocalDate;
 import java.time.temporal.ChronoField;
-import java.util.List;
-import java.util.Objects;
 
 @Data
 @AllArgsConstructor

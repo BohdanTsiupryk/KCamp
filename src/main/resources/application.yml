@@ -8,6 +8,7 @@ spring:
     hibernate:
       ddl-auto: update
     database: postgresql
+    show-sql: false
   datasource:
     initialization-mode: always
     username: ${SPRING_DATASOURCE_USERNAME:postgres}
@@ -15,8 +16,8 @@ spring:
     url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost/kcamp}
   mail:
     host: smtp.gmail.com
-    username: ostapivkidcamp@gmail.com
-    password: Andriyko1998
+    username: ${mail-name}
+    password: ${mail-password}
     port: 465
     properties:
       mail:

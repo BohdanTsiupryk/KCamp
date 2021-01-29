@@ -9,7 +9,6 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-
 public class QuestionnaireDto {
     private String address;
     private int maxDistance;

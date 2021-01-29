@@ -43,10 +43,11 @@ public class PurposeController {
             model.addAttribute("message", "Для здійснення покупок, потрібно підтвердити електронну пошту!");
             return "messagePage";
         }
+        User byId = userService.findById(user.getId());
 
         model.addAttribute("camp", camp);
         model.addAttribute("change", change);
-        model.addAttribute("user", user);
+        model.addAttribute("user", byId);
         return "buyPage";
     }
 

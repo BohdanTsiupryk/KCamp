@@ -6,6 +6,7 @@ import bts.KCamps.model.BoughtTrip;
 import bts.KCamps.model.CampChange;
 import bts.KCamps.model.Child;
 import bts.KCamps.model.User;
+import bts.KCamps.repository.ChangeRepo;
 import bts.KCamps.repository.ChildRepo;
 import bts.KCamps.repository.TripRepo;
 import bts.KCamps.repository.UserRepo;
@@ -29,6 +30,9 @@ import java.util.stream.Collectors;
 public class UserService implements UserDetailsService {
     private static final Logger logger = LogManager.getLogger(UserService.class);
     private final UserRepo userRepo;
+    private final TripRepo tripRepo;
+    private final ChildRepo childRepo;
+    private final ChangeRepo changeRepo;
     private final PasswordEncoder passwordEncoder;
 
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -48,9 +52,9 @@ public class UserService implements UserDetailsService {
         change.setFreePlace(change.getFreePlace() - 1);
         BoughtTrip trip = new BoughtTrip(change, child, user);
         trip.setOrderId(orderId);
-        user.getBoughtTrips()
-                .add(trip);
-        userRepo.save(user);
+        childRepo.save(child);
+        changeRepo.save(change);
+        tripRepo.save(trip);
     }
 
     @Transactional

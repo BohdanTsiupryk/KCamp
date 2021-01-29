@@ -7,7 +7,9 @@ import bts.KCamps.util.EnumUtil;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.CascadeType;
@@ -34,7 +36,8 @@ import java.util.Set;
 import static bts.KCamps.model.Camp.GET_COORDINATES;
 import static bts.KCamps.model.Camp.GET_DESCRIPTIONS;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString(exclude = {"author", "changes", "comments", "coordinate"})
