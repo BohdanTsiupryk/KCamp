@@ -1,6 +1,7 @@
 package bts.KCamps.controllers;
 
 import bts.KCamps.dto.CurrentLocationDto;
+import bts.KCamps.dto.QuestionnaireDto;
 import bts.KCamps.model.Camp;
 import bts.KCamps.model.GoogleCampCoordinate;
 import bts.KCamps.service.SearchService;
@@ -45,5 +46,11 @@ public class SearchController {
         model.addAttribute("apiKey", apiKey);
         ControllerUtil.addTags(model);
         return "search";
+    }
+
+    @PostMapping(value = "/questionnaire")
+    public String handleQuestionnaire(@ModelAttribute QuestionnaireDto questionnaireDto) {
+        System.out.println(questionnaireDto);
+        return "redirect:index";
     }
 }

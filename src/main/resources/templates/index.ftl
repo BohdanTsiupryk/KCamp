@@ -19,7 +19,7 @@
         </div>
     </div>
     <div class="collapse" id="anketa">
-        <form action="/#" method="post" name="#" enctype="multipart/form-data">
+        <form action="/search/questionnaire" method="post" name="questionnaire">
             <h3>Дайте відповідь на декілька простих запитань, і наша система підбере для вас ідеальні табори</h3>
             <ul class="list-group">
                 <li class="list-group-item w-50 p-3"><label>1. Вкажіть місце вашого проживання<input type="text"
@@ -29,7 +29,7 @@
                                                                                                      class="form-control"/></label>
                 </li>
                 <li class="list-group-item w-50 p-3"><label>2. Наскільки далеко може знаходитися табір?<input
-                                                                                                    type="text"
+                                                                                                    type="number"
                                                                                                     name="maxDistance"
                                                                                                     placeholder="Радіус пошуку у кілометрах..."
                                                                                                     style="width: 300px"
@@ -58,7 +58,7 @@
                     </label>
                 </li>
                 <li class="list-group-item w-50 p-3"><label>6. Вікова категорія (Можна обрати декілька)
-                        <select multiple="multiple" class="form-control" style="width: 300px" name="locations">
+                        <select multiple="multiple" class="form-control" style="width: 300px" name="childhoods">
                             <#list childhoods as hood>
                                 <option value="${hood}">${hood.getDescription()}</option>
                             </#list>
@@ -106,7 +106,7 @@
                 </div>
                 <div class="col">
                     <label>Вікова категорія (Можна обрати декілька)</label>
-                    <select multiple="multiple" class="form-control" name="locations">
+                    <select multiple="multiple" class="form-control" name="childhoods">
                         <#list childhoods as hood>
                             <option value="${hood}">${hood.getDescription()}</option>
                         </#list>

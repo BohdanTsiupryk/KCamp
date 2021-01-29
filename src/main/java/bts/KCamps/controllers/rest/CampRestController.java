@@ -28,9 +28,6 @@ public class CampRestController {
     private final UserRepo userRepo;
     private final CampServiceImpl campService;
 
-    @Value("${upload.path}")
-    private String uploadPath;
-
     public CampRestController(CampRepo campRepo, UserRepo userRepo, CampServiceImpl campService) {
         this.campRepo = campRepo;
         this.userRepo = userRepo;
