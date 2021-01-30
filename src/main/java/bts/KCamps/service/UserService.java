@@ -13,6 +13,7 @@ import bts.KCamps.repository.UserRepo;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -101,7 +102,7 @@ public class UserService implements UserDetailsService {
             user.setPassword(passwordEncoder.encode(password));
         }
 
-        if (form.get("birthday") != null) {
+        if (Strings.isNotEmpty(form.get("birthday"))) {
             user.setBirthday(LocalDate.parse(form.get("birthday"), formatter));
         }
 
