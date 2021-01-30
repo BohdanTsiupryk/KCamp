@@ -124,8 +124,9 @@ public class MainController {
     @GetMapping("/profile")
     public String profile( @AuthenticationPrincipal User user, Model model) {
         List<Camp> userCamps = campRepo.findAllByAuthor(user);
+        User byId = userService.findById(user.getId());
 
-        model.addAttribute("userFormDb", user);
+        model.addAttribute("userFormDb", byId);
         model.addAttribute("campError", false);
         model.addAttribute("userCamps", userCamps);
         ControllerUtil.addTags(model);
