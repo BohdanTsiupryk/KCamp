@@ -23,7 +23,7 @@
                 <td>${req.fullName}</td>
                 <td>${req.campName}</td>
                 <td><a href="${req.campUrl}">${req.campUrl}</a></td>
-                <td>${req.message}</td>
+                <td><#if req.message??>${req.message}<#else> - </#if></td>
                 <td><a href="/user/editor/${req.author.id}">Редагувати</a></td>
                 <td><a href="/request/delete/${req.id}">Видалити запит</a></td>
               </tr>
