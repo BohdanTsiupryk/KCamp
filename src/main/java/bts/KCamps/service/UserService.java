@@ -96,11 +96,15 @@ public class UserService implements UserDetailsService {
         user.setEmail(form.get("email"));
         user.setPhone(form.get("phone"));
         String password = form.get("password");
+
         if (password != null && !password.isEmpty()) {
             user.setPassword(passwordEncoder.encode(password));
         }
 
-        user.setBirthday(LocalDate.parse(form.get("birthday"), formatter));
+        if (form.get("birthday") != null) {
+            user.setBirthday(LocalDate.parse(form.get("birthday"), formatter));
+        }
+
         user.setCitizenship(form.get("citizenship"));
         user.setPassportNumber(form.get("passportNumber"));
 
