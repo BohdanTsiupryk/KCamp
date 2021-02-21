@@ -47,6 +47,7 @@ public class SearchController {
         model.addAttribute("camps", camps);
         model.addAttribute("coords", coords);
         model.addAttribute("apiKey", apiKey);
+        model.addAttribute("empty", false);
         ControllerUtil.addTags(model);
         return "search";
     }
