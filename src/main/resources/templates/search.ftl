@@ -3,6 +3,10 @@
 <#include "parts/security.ftl">
 
 <@common.page>
+    <#if empty>
+        <h3>Нажаль не вдалося знайти табір за вашими параметрами =(</h3>
+    <#else>
+
     <@googleMap.multyMap coords apiKey/>
 
     <div class="modal-body"><div id="map"></div></div>
@@ -32,4 +36,5 @@
             </div>
         </#list>
     </div>
+    </#if>
 </@common.page>

@@ -36,10 +36,13 @@ public class SearchController {
     public String searchLocation(String address, int maxDistance, Model model) {
         List<Camp> camps = searchService.findByLocation(address, maxDistance);
         if (camps.isEmpty()) {
-            return "redirect:index";
+            model.addAttribute("empty", true);
+            return "search";
         }
 
-        List<GoogleCampCoordinate> coords = camps.stream().map(Camp::getCoordinate).collect(Collectors.toList());
+        List<GoogleCampCoordinate> coords = camps.stream()
+                .map(Camp::getCoordinate)
+                .collect(Collectors.toList());
 
         model.addAttribute("camps", camps);
         model.addAttribute("coords", coords);

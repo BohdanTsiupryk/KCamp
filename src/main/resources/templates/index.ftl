@@ -11,7 +11,9 @@
                     aria-expanded="false" aria-controls="collapseExample">
                 Пошук поряд
             </button>
-            <a class="btn btn-outline-secondary" href="/sort" role="button">Відсортувати по рейтингу</a>
+            <a class="btn btn-outline-secondary" href="/sort" role="button">
+                Відсортувати по рейтингу
+            </a>
             <button class="btn btn-outline-danger" type="button" data-toggle="collapse" data-target="#anketa"
                     aria-expanded="false" aria-controls="collapseExample">
                 Не вдається знайти найкращий табір?
