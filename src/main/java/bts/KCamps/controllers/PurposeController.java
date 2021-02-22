@@ -76,8 +76,9 @@ public class PurposeController {
         userService.addOrder(change, child, user, orderId);
         mailService.sendOrderToClient(user.getEmail(), data);
 
-        model.addAttribute("message", "Після Оплати, замовлення буде відправлено вам на пошту,\n" +
-                " та ви зможете переглянути його у профілі");
+        model.addAttribute("message", "Дякуємо за замовлення, згодом представник табору звяжеться з вами" +
+                "<br> Після оплати путівка буде відправлена вам на пошту вказану у профілі");
+        model.addAttribute("data", data);
         return "messagePage";
     }
 
