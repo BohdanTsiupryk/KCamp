@@ -2,7 +2,7 @@
 
 <@common.page>
 <div>
-    ${message?if_exists}
+    <h3>${message?if_exists}</h3>
 
     <dl class="row">
         <dt class="col-sm-3">Найменування табору</dt>
@@ -21,6 +21,7 @@
         <dd class="col-sm-9">${kidSpecialWishes?if_exists}</dd>
 
         <dt class="col-sm-3">Інформація про дитину:</dt>
+        <dd class="col-sm-9">-</dd>
 
         <dt class="col-sm-3">Ім'я</dt>
         <dd class="col-sm-9">${kidFullName?if_exists}</dd>
