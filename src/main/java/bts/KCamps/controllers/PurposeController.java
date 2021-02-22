@@ -78,16 +78,16 @@ public class PurposeController {
 
         model.addAttribute("message", "Дякуємо за замовлення, згодом представник табору звяжеться з вами" +
                 "<br> Після оплати путівка буде відправлена вам на пошту вказану у профілі");
-        model.addAttribute("data", data);
+        model.mergeAttributes(data);
         return "messagePage";
     }
 
     private Map<String, String> buildDataMap(Map<String, String> form, Camp camp, User user, CampChange change) {
         Map<String, String> data = new HashMap<>();
-        data.put("camp name", camp.getNameCamp());
-        data.put("user name", user.getUsername());
-        data.put("begin date", change.getBeginDate().toString());
-        data.put("end date", change.getEndDate().toString());
+        data.put("camp_name", camp.getNameCamp());
+        data.put("user_name", user.getUsername());
+        data.put("begin_date", change.getBeginDate().toString());
+        data.put("end_date", change.getEndDate().toString());
 
         form.keySet().stream()
                 .filter(s -> s.startsWith("kid"))
